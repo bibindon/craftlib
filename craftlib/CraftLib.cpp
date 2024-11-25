@@ -64,7 +64,7 @@ std::string CraftLib::Up()
         {
             m_leftCursor--;
         }
-        else
+        else if (m_leftCursor == 0)
         {
             if (m_leftSelect != 0)
             {
@@ -91,7 +91,7 @@ std::string CraftLib::Down()
         {
             m_leftCursor++;
         }
-        else
+        else if (m_leftCursor == LEFT_PANEL_ROW_MAX - 1)
         {
             if (m_leftSelect != (int)m_outputList.size() - 1)
             {
@@ -104,22 +104,59 @@ std::string CraftLib::Down()
 
 std::string CraftLib::Right()
 {
+    if (m_eFocus == eFocus::CONFIRM)
+    {
+        if (m_confirmCursor == 0)
+        {
+            m_confirmCursor = 1;
+            m_SE->PlayMove();
+        }
+    }
     return std::string();
 }
 
 std::string CraftLib::Left()
 {
+    if (m_eFocus == eFocus::CONFIRM)
+    {
+        if (m_confirmCursor == 1)
+        {
+            m_confirmCursor = 0;
+            m_SE->PlayMove();
+        }
+    }
     return std::string();
 }
 
 std::string CraftLib::Into()
 {
+    if (m_eFocus == eFocus::OUTPUT)
+    {
+        m_eFocus = eFocus::CONFIRM;
+        m_SE->PlayClick();
+    }
+    else if (m_eFocus == eFocus::CONFIRM)
+    {
+        m_SE->PlayClick();
+        // TODO クラフト成果物を文字列で返す
+    }
     return std::string();
 }
 
 std::string CraftLib::Back()
 {
-    return std::string();
+    std::string result;
+    if (m_eFocus == eFocus::OUTPUT)
+    {
+        result = "EXIT";
+        m_SE->PlayBack();
+    }
+    else if (m_eFocus == eFocus::CONFIRM)
+    {
+        m_eFocus = eFocus::OUTPUT;
+        m_SE->PlayBack();
+    }
+    return result;
 }
 
 std::string NSCraftLib::CraftLib::Next()
@@ -181,8 +218,7 @@ void CraftLib::Draw()
         }
     }
 
-    // 右側の説明テキスト
-
+    // 中央の画像
     std::string work;
     work = m_outputList.at(m_leftSelect);
 
@@ -191,6 +227,7 @@ void CraftLib::Draw()
         m_imageMap.at(work)->DrawImage(550, 300);
     }
 
+    // 右側の説明テキスト
     std::string detail = m_outputInfoMap.at(work);
     std::vector<std::string> details = split(detail, '\n');
 
@@ -203,7 +240,28 @@ void CraftLib::Draw()
         );
     }
 
-    m_sprCursor->DrawImage(80, 205 + (m_leftCursor * 60));
+    // はい・いいえの表示
+    if (m_eFocus == eFocus::CONFIRM)
+    {
+        m_sprPanelLeft->DrawImage(550, 200 + (m_leftCursor * LEFT_PANEL_HEIGHT));
+        m_font->DrawText_(
+            "はい　　　　　いいえ",
+            650,
+            200 + LEFT_PANEL_PADDINGY + (m_leftCursor * LEFT_PANEL_HEIGHT)
+        );
+    }
+
+
+    // カーソルの表示
+    if (m_eFocus == eFocus::OUTPUT)
+    {
+        m_sprCursor->DrawImage(80, 205 + (m_leftCursor * 60));
+    }
+    else if (m_eFocus == eFocus::CONFIRM)
+    {
+        m_sprCursor->DrawImage(570 + (m_confirmCursor * 160), 205 + (m_leftCursor * 60));
+    }
+
 
 }
 
