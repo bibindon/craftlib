@@ -130,6 +130,7 @@ std::string CraftLib::Left()
 
 std::string CraftLib::Into()
 {
+    std::string result;
     if (m_eFocus == eFocus::OUTPUT)
     {
         m_eFocus = eFocus::CONFIRM;
@@ -137,10 +138,18 @@ std::string CraftLib::Into()
     }
     else if (m_eFocus == eFocus::CONFIRM)
     {
-        m_SE->PlayClick();
-        // TODO クラフト成果物を文字列で返す
+        if (m_confirmCursor == 0)
+        {
+            m_SE->PlayClick();
+            result = m_outputList.at(m_leftSelect);
+        }
+        else if (m_confirmCursor == 1)
+        {
+            m_SE->PlayBack();
+            m_eFocus = eFocus::OUTPUT;
+        }
     }
-    return std::string();
+    return result;
 }
 
 std::string CraftLib::Back()
@@ -161,22 +170,425 @@ std::string CraftLib::Back()
 
 std::string NSCraftLib::CraftLib::Next()
 {
-    return std::string();
+    if (m_eFocus == eFocus::OUTPUT)
+    {
+        if (m_leftSelect <= (int)m_outputList.size() - 2)
+        {
+            m_leftSelect++;
+            m_SE->PlayMove();
+        }
+
+        // カーソルが一番下にあるときに下ボタンを押されたら
+        // カーソルはそのままでリストが上に移動する
+        if (m_leftCursor != LEFT_PANEL_ROW_MAX - 1)
+        {
+            m_leftCursor++;
+        }
+        else if (m_leftCursor == LEFT_PANEL_ROW_MAX - 1)
+        {
+            if (m_leftSelect != (int)m_outputList.size() - 1)
+            {
+                m_leftBegin++;
+            }
+        }
+    }
+    return m_outputList.at(m_leftSelect);
 }
 
 std::string NSCraftLib::CraftLib::Previous()
 {
-    return std::string();
+    if (m_eFocus == eFocus::OUTPUT)
+    {
+        if (m_leftSelect >= 1)
+        {
+            m_leftSelect--;
+            m_SE->PlayMove();
+        }
+        // カーソルが一番上にあるときに上ボタンを押されたら
+        // カーソルはそのままでリストが下に移動する
+        if (m_leftCursor != 0)
+        {
+            m_leftCursor--;
+        }
+        else if (m_leftCursor == 0)
+        {
+            if (m_leftSelect != 0)
+            {
+                m_leftBegin--;
+            }
+        }
+    }
+    return m_outputList.at(m_leftSelect);
 }
 
-void CraftLib::Click(const int x, const int y)
+void CraftLib::CursorOn(const int x, const int y)
 {
-    m_SE->PlayClick();
+    if (m_eFocus == eFocus::OUTPUT)
+    {
+        int previousCursor = m_leftCursor;
+        if (LEFT_PANEL_STARTX < x && x <= LEFT_PANEL_STARTX + LEFT_PANEL_WIDTH)
+        {
+            if (LEFT_PANEL_STARTY < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 1)
+            {
+                m_eFocus = eFocus::OUTPUT;
+                m_leftCursor = 0;
+                m_leftSelect = 0 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 1 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 2)
+            {
+                m_eFocus = eFocus::OUTPUT;
+                m_leftCursor = 1;
+                m_leftSelect = 1 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 2 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 3)
+            {
+                m_eFocus = eFocus::OUTPUT;
+                m_leftCursor = 2;
+                m_leftSelect = 2 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 3 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 4)
+            {
+                m_eFocus = eFocus::OUTPUT;
+                m_leftCursor = 3;
+                m_leftSelect = 3 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 4 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 5)
+            {
+                m_eFocus = eFocus::OUTPUT;
+                m_leftCursor = 4;
+                m_leftSelect = 4 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 5 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 6)
+            {
+                m_eFocus = eFocus::OUTPUT;
+                m_leftCursor = 5;
+                m_leftSelect = 5 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 6 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 7)
+            {
+                m_eFocus = eFocus::OUTPUT;
+                m_leftCursor = 6;
+                m_leftSelect = 6 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 7 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 8)
+            {
+                m_eFocus = eFocus::OUTPUT;
+                m_leftCursor = 7;
+                m_leftSelect = 7 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 8 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 9)
+            {
+                m_eFocus = eFocus::OUTPUT;
+                m_leftCursor = 8;
+                m_leftSelect = 8 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 9 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 10)
+            {
+                m_eFocus = eFocus::OUTPUT;
+                m_leftCursor = 9;
+                m_leftSelect = 9 + m_leftBegin;
+            }
+        }
+        if (previousCursor != m_leftCursor)
+        {
+            m_SE->PlayMove();
+        }
+    }
+    else if (m_eFocus == eFocus::CONFIRM)
+    {
+        int previousCursor = m_confirmCursor;
+        if (LEFT_PANEL_STARTY < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 1)
+        {
+            if (m_leftSelect == 0)
+            {
+                if (550 < x && x <= 850)
+                {
+                    m_confirmCursor = 0;
+                }
+                else if (850 < x && x <= 550 + LEFT_PANEL_WIDTH)
+                {
+                    m_confirmCursor = 1;
+                }
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 1 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 2)
+        {
+            if (m_leftSelect == 1)
+            {
+                if (550 < x && x <= 850)
+                {
+                    m_confirmCursor = 0;
+                }
+                else if (850 < x && x <= 550 + LEFT_PANEL_WIDTH)
+                {
+                    m_confirmCursor = 1;
+                }
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 2 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 3)
+        {
+            if (m_leftSelect == 2)
+            {
+                if (550 < x && x <= 850)
+                {
+                    m_confirmCursor = 0;
+                }
+                else if (850 < x && x <= 550 + LEFT_PANEL_WIDTH)
+                {
+                    m_confirmCursor = 1;
+                }
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 3 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 4)
+        {
+            if (m_leftSelect == 3)
+            {
+                if (550 < x && x <= 850)
+                {
+                    m_confirmCursor = 0;
+                }
+                else if (850 < x && x <= 550 + LEFT_PANEL_WIDTH)
+                {
+                    m_confirmCursor = 1;
+                }
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 4 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 5)
+        {
+            if (m_leftSelect == 4)
+            {
+                if (550 < x && x <= 850)
+                {
+                    m_confirmCursor = 0;
+                }
+                else if (850 < x && x <= 550 + LEFT_PANEL_WIDTH)
+                {
+                    m_confirmCursor = 1;
+                }
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 5 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 6)
+        {
+            if (m_leftSelect == 5)
+            {
+                if (550 < x && x <= 850)
+                {
+                    m_confirmCursor = 0;
+                }
+                else if (850 < x && x <= 550 + LEFT_PANEL_WIDTH)
+                {
+                    m_confirmCursor = 1;
+                }
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 6 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 7)
+        {
+            if (m_leftSelect == 6)
+            {
+                if (550 < x && x <= 850)
+                {
+                    m_confirmCursor = 0;
+                }
+                else if (850 < x && x <= 550 + LEFT_PANEL_WIDTH)
+                {
+                    m_confirmCursor = 1;
+                }
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 7 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 8)
+        {
+            if (m_leftSelect == 7)
+            {
+                if (550 < x && x <= 850)
+                {
+                    m_confirmCursor = 0;
+                }
+                else if (850 < x && x <= 550 + LEFT_PANEL_WIDTH)
+                {
+                    m_confirmCursor = 1;
+                }
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 8 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 9)
+        {
+            if (m_leftSelect == 8)
+            {
+                if (550 < x && x <= 850)
+                {
+                    m_confirmCursor = 0;
+                }
+                else if (850 < x && x <= 550 + LEFT_PANEL_WIDTH)
+                {
+                    m_confirmCursor = 1;
+                }
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 9 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 10)
+        {
+            if (m_leftSelect == 9)
+            {
+                if (550 < x && x <= 850)
+                {
+                    m_confirmCursor = 0;
+                }
+                else if (850 < x && x <= 550 + LEFT_PANEL_WIDTH)
+                {
+                    m_confirmCursor = 1;
+                }
+            }
+        }
+
+        if (previousCursor != m_confirmCursor)
+        {
+            m_SE->PlayMove();
+        }
+    }
 }
 
-void CraftLib::RightClick(const int x, const int y)
+std::string CraftLib::Click(const int x, const int y)
 {
+    std::string result;
     m_SE->PlayClick();
+    if (m_eFocus == eFocus::OUTPUT)
+    {
+        if (LEFT_PANEL_STARTX < x && x <= LEFT_PANEL_STARTX + LEFT_PANEL_WIDTH)
+        {
+            if (LEFT_PANEL_STARTY < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 1)
+            {
+                m_eFocus = eFocus::CONFIRM;
+                m_leftCursor = 0;
+                m_leftSelect = 0 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 1 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 2)
+            {
+                m_eFocus = eFocus::CONFIRM;
+                m_leftCursor = 1;
+                m_leftSelect = 1 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 2 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 3)
+            {
+                m_eFocus = eFocus::CONFIRM;
+                m_leftCursor = 2;
+                m_leftSelect = 2 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 3 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 4)
+            {
+                m_eFocus = eFocus::CONFIRM;
+                m_leftCursor = 3;
+                m_leftSelect = 3 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 4 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 5)
+            {
+                m_eFocus = eFocus::CONFIRM;
+                m_leftCursor = 4;
+                m_leftSelect = 4 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 5 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 6)
+            {
+                m_eFocus = eFocus::CONFIRM;
+                m_leftCursor = 5;
+                m_leftSelect = 5 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 6 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 7)
+            {
+                m_eFocus = eFocus::CONFIRM;
+                m_leftCursor = 6;
+                m_leftSelect = 6 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 7 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 8)
+            {
+                m_eFocus = eFocus::CONFIRM;
+                m_leftCursor = 7;
+                m_leftSelect = 7 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 8 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 9)
+            {
+                m_eFocus = eFocus::CONFIRM;
+                m_leftCursor = 8;
+                m_leftSelect = 8 + m_leftBegin;
+            }
+            else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 9 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 10)
+            {
+                m_eFocus = eFocus::CONFIRM;
+                m_leftCursor = 9;
+                m_leftSelect = 9 + m_leftBegin;
+            }
+        }
+    }
+    else if (m_eFocus == eFocus::CONFIRM)
+    {
+        if (LEFT_PANEL_STARTY < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 1)
+        {
+            if (m_leftSelect == 0)
+            {
+                result = Into();
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 1 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 2)
+        {
+            if (m_leftSelect == 1)
+            {
+                result = Into();
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 2 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 3)
+        {
+            if (m_leftSelect == 2)
+            {
+                result = Into();
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 3 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 4)
+        {
+            if (m_leftSelect == 3)
+            {
+                result = Into();
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 4 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 5)
+        {
+            if (m_leftSelect == 4)
+            {
+                result = Into();
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 5 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 6)
+        {
+            if (m_leftSelect == 5)
+            {
+                result = Into();
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 6 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 7)
+        {
+            if (m_leftSelect == 6)
+            {
+                result = Into();
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 7 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 8)
+        {
+            if (m_leftSelect == 7)
+            {
+                result = Into();
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 8 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 9)
+        {
+            if (m_leftSelect == 8)
+            {
+                result = Into();
+            }
+        }
+        else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 9 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 10)
+        {
+            if (m_leftSelect == 9)
+            {
+                result = Into();
+            }
+        }
+    }
+    return result;
 }
 
 void CraftLib::Draw()
@@ -245,7 +657,7 @@ void CraftLib::Draw()
     {
         m_sprPanelLeft->DrawImage(550, 200 + (m_leftCursor * LEFT_PANEL_HEIGHT));
         m_font->DrawText_(
-            "はい　　　　　いいえ",
+            "クラフトする　　しない",
             650,
             200 + LEFT_PANEL_PADDINGY + (m_leftCursor * LEFT_PANEL_HEIGHT)
         );

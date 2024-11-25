@@ -706,7 +706,6 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
         case VK_BACK:
         {
-            // TODO クラフト画面を閉じるテスト
             std::string result;
             result = menu.Back();
             if (result == "EXIT")
@@ -720,6 +719,12 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
             break;
         }
         break;
+    case WM_MOUSEMOVE:
+    {
+        POINTS mouse_p = MAKEPOINTS(lParam);
+        menu.CursorOn(mouse_p.x, mouse_p.y);
+        break;
+    }
     case WM_LBUTTONDOWN:
     {
         POINTS mouse_p = MAKEPOINTS(lParam);
@@ -728,8 +733,12 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     }
     case WM_RBUTTONDOWN:
     {
-        POINTS mouse_p = MAKEPOINTS(lParam);
-        menu.RightClick(mouse_p.x, mouse_p.y);
+        std::string result;
+        result = menu.Back();
+        if (result == "EXIT")
+        {
+            bShowMenu = false;
+        }
         break;
     }
     case WM_MOUSEWHEEL:

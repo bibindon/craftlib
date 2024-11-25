@@ -55,8 +55,8 @@ public:
     std::string Back();
     std::string Next();
     std::string Previous();
-    void Click(const int x, const int y);
-    void RightClick(const int x, const int y);
+    void CursorOn(const int x, const int y);
+    std::string Click(const int x, const int y);
     void Draw();
     
 private:
