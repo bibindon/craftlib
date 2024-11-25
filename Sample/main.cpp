@@ -269,9 +269,6 @@ HRESULT InitD3D(HWND hWnd)
     Sprite* sprBackground = new Sprite(g_pd3dDevice);
     sprBackground->Load("background.png");
 
-    Sprite* sprPanel = new Sprite(g_pd3dDevice);
-    sprPanel->Load("panel.png");
-
     Sprite* sprPanelLeft = new Sprite(g_pd3dDevice);
     sprPanelLeft->Load("panelLeft.png");
 
@@ -280,49 +277,318 @@ HRESULT InitD3D(HWND hWnd)
 
     ISoundEffect* pSE = new SoundEffect();
 
-    menu.Init(pFont, pSE, sprCursor, sprBackground, sprPanel, sprPanelLeft);
+    menu.Init(pFont, pSE, sprCursor, sprBackground, sprPanelLeft);
     {
         std::vector<std::string> vs;
 
         vs.push_back("アイテムＡＡＡ");
         vs.push_back("武器ＢＢＢ");
+        vs.push_back("アイテムＣ");
+        vs.push_back("アイテムＤ");
+        vs.push_back("アイテムＥ");
+        vs.push_back("アイテムＦ");
+        vs.push_back("アイテムＧ");
+        vs.push_back("アイテムＨ");
+        vs.push_back("アイテムＩ");
+        vs.push_back("アイテムＪ");
+        vs.push_back("アイテムＫ");
+        vs.push_back("アイテムＬ");
+        vs.push_back("アイテムＭ");
+        vs.push_back("アイテムＮ");
+        vs.push_back("アイテムＯ");
+        vs.push_back("アイテムＰ");
         menu.SetOutputList(vs);
 
         std::string work;
 
-        work = "成果物の名前：アイテムＡＡＡ\n";
-        work += "成果物の数：１\n";
-        work += "成果物の強化度\n";
-        work += "\n";
-        work += "素材１の名前：素材名あああ\n";
-        work += "素材１の数：１０\n";
-        work += "素材１の強化度：１\n";
-        work += "\n";
-        work += "素材２の名前：素材名いいい\n";
-        work += "素材２の数：２０\n";
-        work += "素材２の強化度：２\n";
+        {
+            work = "成果物の名前：アイテムＡＡＡ\n";
+            work += "成果物の数：１\n";
+            work += "成果物の強化度\n";
+            work += "\n";
+            work += "素材１の名前：素材名あああ\n";
+            work += "素材１の数：１０\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名いいい\n";
+            work += "素材２の数：２０\n";
+            work += "素材２の強化度：２\n";
 
-        menu.SetOutputInfo("アイテムＡＡＡ", work);
+            menu.SetOutputInfo("アイテムＡＡＡ", work);
 
-        work = "成果物の名前：武器ＢＢＢ\n";
-        work += "成果物の数：２\n";
-        work += "成果物の強化度：２\n";
-        work += "\n";
-        work += "素材１の名前：素材名かかかかか\n";
-        work += "素材１の数：１１１\n";
-        work += "素材１の強化度：１\n";
-        work += "\n";
-        work += "素材２の名前：素材名ききききき\n";
-        work += "素材２の数：２２２\n";
-        work += "素材２の強化度：２\n";
+            ISprite* sprite1 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("アイテムＡＡＡ", "item1.png", sprite1);
+        }
+        {
+            work = "成果物の名前：武器ＢＢＢ\n";
+            work += "成果物の数：２\n";
+            work += "成果物の強化度：２\n";
+            work += "\n";
+            work += "素材１の名前：素材名かかかかか\n";
+            work += "素材１の数：１１１\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名ききききき\n";
+            work += "素材２の数：２２２\n";
+            work += "素材２の強化度：２\n";
 
-        menu.SetOutputInfo("武器ＢＢＢ", work);
+            menu.SetOutputInfo("武器ＢＢＢ", work);
 
-        ISprite* sprite1 = new Sprite(g_pd3dDevice);
-        menu.SetOutputImage("アイテムＡＡＡ", "item1.png", sprite1);
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("武器ＢＢＢ", "item2.png", sprite2);
+        }
+        {
+            work = "成果物の名前：アイテムＣ\n";
+            work += "成果物の数：２\n";
+            work += "成果物の強化度：２\n";
+            work += "\n";
+            work += "素材１の名前：素材名かかかかか\n";
+            work += "素材１の数：１１１\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名ききききき\n";
+            work += "素材２の数：２２２\n";
+            work += "素材２の強化度：２\n";
 
-        ISprite* sprite2 = new Sprite(g_pd3dDevice);
-        menu.SetOutputImage("武器ＢＢＢ", "item2.png", sprite2);
+            menu.SetOutputInfo("アイテムＣ", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("アイテムＣ", "item3.png", sprite2);
+        }
+        {
+            work = "成果物の名前：アイテムＤ\n";
+            work += "成果物の数：２\n";
+            work += "成果物の強化度：２\n";
+            work += "\n";
+            work += "素材１の名前：素材名かかかかか\n";
+            work += "素材１の数：１１１\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名ききききき\n";
+            work += "素材２の数：２２２\n";
+            work += "素材２の強化度：２\n";
+
+            menu.SetOutputInfo("アイテムＤ", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("アイテムＤ", "item1.png", sprite2);
+        }
+        {
+            work = "成果物の名前：アイテムＥ\n";
+            work += "成果物の数：２\n";
+            work += "成果物の強化度：２\n";
+            work += "\n";
+            work += "素材１の名前：素材名かかかかか\n";
+            work += "素材１の数：１１１\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名ききききき\n";
+            work += "素材２の数：２２２\n";
+            work += "素材２の強化度：２\n";
+
+            menu.SetOutputInfo("アイテムＥ", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("アイテムＥ", "item1.png", sprite2);
+        }
+        {
+            work = "成果物の名前：アイテムＦ\n";
+            work += "成果物の数：２\n";
+            work += "成果物の強化度：２\n";
+            work += "\n";
+            work += "素材１の名前：素材名かかかかか\n";
+            work += "素材１の数：１１１\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名ききききき\n";
+            work += "素材２の数：２２２\n";
+            work += "素材２の強化度：２\n";
+
+            menu.SetOutputInfo("アイテムＦ", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("アイテムＦ", "item1.png", sprite2);
+        }
+        {
+            work = "成果物の名前：アイテムＧ\n";
+            work += "成果物の数：２\n";
+            work += "成果物の強化度：２\n";
+            work += "\n";
+            work += "素材１の名前：素材名かかかかか\n";
+            work += "素材１の数：１１１\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名ききききき\n";
+            work += "素材２の数：２２２\n";
+            work += "素材２の強化度：２\n";
+
+            menu.SetOutputInfo("アイテムＧ", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("アイテムＧ", "item1.png", sprite2);
+        }
+        {
+            work = "成果物の名前：アイテムＨ\n";
+            work += "成果物の数：２\n";
+            work += "成果物の強化度：２\n";
+            work += "\n";
+            work += "素材１の名前：素材名かかかかか\n";
+            work += "素材１の数：１１１\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名ききききき\n";
+            work += "素材２の数：２２２\n";
+            work += "素材２の強化度：２\n";
+
+            menu.SetOutputInfo("アイテムＨ", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("アイテムＨ", "item1.png", sprite2);
+        }
+        {
+            work = "成果物の名前：アイテムＩ\n";
+            work += "成果物の数：２\n";
+            work += "成果物の強化度：２\n";
+            work += "\n";
+            work += "素材１の名前：素材名かかかかか\n";
+            work += "素材１の数：１１１\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名ききききき\n";
+            work += "素材２の数：２２２\n";
+            work += "素材２の強化度：２\n";
+
+            menu.SetOutputInfo("アイテムＩ", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("アイテムＩ", "item1.png", sprite2);
+        }
+        {
+            work = "成果物の名前：アイテムＪ\n";
+            work += "成果物の数：２\n";
+            work += "成果物の強化度：２\n";
+            work += "\n";
+            work += "素材１の名前：素材名かかかかか\n";
+            work += "素材１の数：１１１\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名ききききき\n";
+            work += "素材２の数：２２２\n";
+            work += "素材２の強化度：２\n";
+
+            menu.SetOutputInfo("アイテムＪ", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("アイテムＪ", "item1.png", sprite2);
+        }
+        {
+            work = "成果物の名前：アイテムＫ\n";
+            work += "成果物の数：２\n";
+            work += "成果物の強化度：２\n";
+            work += "\n";
+            work += "素材１の名前：素材名かかかかか\n";
+            work += "素材１の数：１１１\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名ききききき\n";
+            work += "素材２の数：２２２\n";
+            work += "素材２の強化度：２\n";
+
+            menu.SetOutputInfo("アイテムＫ", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("アイテムＫ", "item1.png", sprite2);
+        }
+        {
+            work = "成果物の名前：アイテムＬ\n";
+            work += "成果物の数：２\n";
+            work += "成果物の強化度：２\n";
+            work += "\n";
+            work += "素材１の名前：素材名かかかかか\n";
+            work += "素材１の数：１１１\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名ききききき\n";
+            work += "素材２の数：２２２\n";
+            work += "素材２の強化度：２\n";
+
+            menu.SetOutputInfo("アイテムＬ", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("アイテムＬ", "item1.png", sprite2);
+        }
+        {
+            work = "成果物の名前：アイテムＭ\n";
+            work += "成果物の数：２\n";
+            work += "成果物の強化度：２\n";
+            work += "\n";
+            work += "素材１の名前：素材名かかかかか\n";
+            work += "素材１の数：１１１\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名ききききき\n";
+            work += "素材２の数：２２２\n";
+            work += "素材２の強化度：２\n";
+
+            menu.SetOutputInfo("アイテムＭ", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("アイテムＭ", "item1.png", sprite2);
+        }
+        {
+            work = "成果物の名前：アイテムＮ\n";
+            work += "成果物の数：２\n";
+            work += "成果物の強化度：２\n";
+            work += "\n";
+            work += "素材１の名前：素材名かかかかか\n";
+            work += "素材１の数：１１１\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名ききききき\n";
+            work += "素材２の数：２２２\n";
+            work += "素材２の強化度：２\n";
+
+            menu.SetOutputInfo("アイテムＮ", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("アイテムＮ", "item1.png", sprite2);
+        }
+        {
+            work = "成果物の名前：アイテムＯ\n";
+            work += "成果物の数：２\n";
+            work += "成果物の強化度：２\n";
+            work += "\n";
+            work += "素材１の名前：素材名かかかかか\n";
+            work += "素材１の数：１１１\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名ききききき\n";
+            work += "素材２の数：２２２\n";
+            work += "素材２の強化度：２\n";
+
+            menu.SetOutputInfo("アイテムＯ", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("アイテムＯ", "item1.png", sprite2);
+        }
+        {
+            work = "成果物の名前：アイテムＰ\n";
+            work += "成果物の数：２\n";
+            work += "成果物の強化度：２\n";
+            work += "\n";
+            work += "素材１の名前：素材名かかかかか\n";
+            work += "素材１の数：１１１\n";
+            work += "素材１の強化度：１\n";
+            work += "\n";
+            work += "素材２の名前：素材名ききききき\n";
+            work += "素材２の数：２２２\n";
+            work += "素材２の強化度：２\n";
+
+            menu.SetOutputInfo("アイテムＰ", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("アイテムＰ", "item1.png", sprite2);
+        }
     }
 
     return S_OK;

@@ -39,7 +39,6 @@ public:
               ISoundEffect* SE,
               ISprite* sprCursor,
               ISprite* sprBackground,
-              ISprite* sprPanel,
               ISprite* sprPanelLeft);
 
     void SetOutputList(const std::vector<std::string>& arg);
@@ -70,7 +69,6 @@ private:
 
     ISprite* m_sprCursor;
     ISprite* m_sprBackground;
-    ISprite* m_sprPanel; // TODO Remove
     ISprite* m_sprPanelLeft;
     IFont* m_font;
     ISoundEffect* m_SE;
@@ -78,7 +76,6 @@ private:
 
     std::vector<std::string> m_outputList;
     std::unordered_map<std::string, std::string> m_outputInfoMap;
-//    std::unordered_map<std::string, std::string> m_imagePathMap;
     std::unordered_map<std::string, ISprite*> m_imageMap;
 
     const int LEFT_PANEL_PADDINGX = 50;
@@ -92,9 +89,16 @@ private:
 
     const int LEFT_PANEL_ROW_MAX = 10;
 
+    // スクロール可能であることを考慮する
+    // 上から画面上で何番目にカーソルがあるか。
+    int m_leftCursor = 0;
 
+    // カーソルが選択している要素がm_outputListの何番目の要素か。
+    int m_leftSelect = 0;
 
-    int m_outputCursorIndex = 0;
+    // 何番目のアイテムが一番上に表示されているか
+    // スクロール可能なので一番上に表示されるアイテムはスクロールすると変わる。
+    int m_leftBegin = 0;
 };
 }
 

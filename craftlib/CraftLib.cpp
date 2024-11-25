@@ -21,14 +21,12 @@ void CraftLib::Init(IFont* font,
                     ISoundEffect* SE,
                     ISprite* sprCursor,
                     ISprite* sprBackground,
-                    ISprite* sprPanel,
                     ISprite* sprPanelLeft)
 {
     m_font = font;
     m_SE = SE;
     m_sprCursor = sprCursor;
     m_sprBackground = sprBackground;
-    m_sprPanel = sprPanel;
     m_sprPanelLeft = sprPanelLeft;
 }
 
@@ -51,31 +49,57 @@ void NSCraftLib::CraftLib::SetOutputImage(const std::string& key,
 
 }
 
-// TODO スクロールできることに注意
 std::string CraftLib::Up()
 {
     if (m_eFocus == eFocus::OUTPUT)
     {
-        if (m_outputCursorIndex >= 1)
+        if (m_leftSelect >= 1)
         {
-            m_outputCursorIndex--;
+            m_leftSelect--;
             m_SE->PlayMove();
         }
+        // カーソルが一番上にあるときに上ボタンを押されたら
+        // カーソルはそのままでリストが下に移動する
+        if (m_leftCursor != 0)
+        {
+            m_leftCursor--;
+        }
+        else
+        {
+            if (m_leftSelect != 0)
+            {
+                m_leftBegin--;
+            }
+        }
     }
-    return m_outputList.at(m_outputCursorIndex);
+    return m_outputList.at(m_leftSelect);
 }
 
 std::string CraftLib::Down()
 {
     if (m_eFocus == eFocus::OUTPUT)
     {
-        if (m_outputCursorIndex <= (int)m_outputList.size() - 2)
+        if (m_leftSelect <= (int)m_outputList.size() - 2)
         {
-            m_outputCursorIndex++;
+            m_leftSelect++;
             m_SE->PlayMove();
         }
+
+        // カーソルが一番下にあるときに下ボタンを押されたら
+        // カーソルはそのままでリストが上に移動する
+        if (m_leftCursor != LEFT_PANEL_ROW_MAX - 1)
+        {
+            m_leftCursor++;
+        }
+        else
+        {
+            if (m_leftSelect != (int)m_outputList.size() - 1)
+            {
+                m_leftBegin++;
+            }
+        }
     }
-    return m_outputList.at(m_outputCursorIndex);
+    return m_outputList.at(m_leftSelect);
 }
 
 std::string CraftLib::Right()
@@ -124,25 +148,48 @@ void CraftLib::Draw()
     m_sprBackground->DrawImage(0, 0);
 
     // 左の列の背景
-    for (int i = 0; i < LEFT_PANEL_ROW_MAX; ++i)
+    if ((int)m_outputList.size() >= LEFT_PANEL_ROW_MAX)
     {
-        m_sprPanelLeft->DrawImage(LEFT_PANEL_STARTX, LEFT_PANEL_STARTY + (LEFT_PANEL_HEIGHT * i));
+        for (int i = 0; i < LEFT_PANEL_ROW_MAX; ++i) {
+            m_sprPanelLeft->DrawImage(LEFT_PANEL_STARTX, LEFT_PANEL_STARTY + (LEFT_PANEL_HEIGHT * i));
+        }
+    }
+    else
+    {
+        for (std::size_t i = 0; i < m_outputList.size(); ++i) {
+            m_sprPanelLeft->DrawImage(LEFT_PANEL_STARTX, LEFT_PANEL_STARTY + (LEFT_PANEL_HEIGHT * i));
+        }
     }
 
     // 左の列の文字、成果物の名称
-    for (std::size_t i = 0; i < m_outputList.size(); ++i)
+    if ((int)m_outputList.size() >= LEFT_PANEL_ROW_MAX)
     {
-        m_font->DrawText_(m_outputList.at(i),
-                          LEFT_PANEL_STARTX + LEFT_PANEL_PADDINGX,
-                          LEFT_PANEL_STARTY + LEFT_PANEL_PADDINGY + (i * LEFT_PANEL_HEIGHT));
+        for (int i = m_leftBegin; i < m_leftBegin + LEFT_PANEL_ROW_MAX; ++i)
+        {
+            m_font->DrawText_(m_outputList.at(i),
+                              LEFT_PANEL_STARTX + LEFT_PANEL_PADDINGX,
+                              LEFT_PANEL_STARTY + LEFT_PANEL_PADDINGY + ((i - m_leftBegin) * LEFT_PANEL_HEIGHT));
+        }
+    }
+    else
+    {
+        for (std::size_t i = 0; i < m_outputList.size(); ++i)
+        {
+            m_font->DrawText_(m_outputList.at(i),
+                              LEFT_PANEL_STARTX + LEFT_PANEL_PADDINGX,
+                              LEFT_PANEL_STARTY + LEFT_PANEL_PADDINGY + (i * LEFT_PANEL_HEIGHT));
+        }
     }
 
     // 右側の説明テキスト
 
     std::string work;
-    work = m_outputList.at(m_outputCursorIndex);
+    work = m_outputList.at(m_leftSelect);
 
-    m_imageMap.at(work)->DrawImage(550, 300);
+    if (m_imageMap.find(work) != m_imageMap.end())
+    {
+        m_imageMap.at(work)->DrawImage(550, 300);
+    }
 
     std::string detail = m_outputInfoMap.at(work);
     std::vector<std::string> details = split(detail, '\n');
@@ -156,7 +203,7 @@ void CraftLib::Draw()
         );
     }
 
-    m_sprCursor->DrawImage(80, 205 + (m_outputCursorIndex * 60));
+    m_sprCursor->DrawImage(80, 205 + (m_leftCursor * 60));
 
 }
 
