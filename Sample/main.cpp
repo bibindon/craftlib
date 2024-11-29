@@ -272,12 +272,15 @@ HRESULT InitD3D(HWND hWnd)
     Sprite* sprPanelLeft = new Sprite(g_pd3dDevice);
     sprPanelLeft->Load("panelLeft.png");
 
+    Sprite* sprPanelTop = new Sprite(g_pd3dDevice);
+    sprPanelTop->Load("craftPanel.png");
+
     IFont* pFont = new Font(g_pd3dDevice);
     pFont->Init();
 
     ISoundEffect* pSE = new SoundEffect();
 
-    menu.Init(pFont, pSE, sprCursor, sprBackground, sprPanelLeft);
+    menu.Init(pFont, pSE, sprCursor, sprBackground, sprPanelLeft, sprPanelTop);
     {
         std::vector<std::string> vs;
 
@@ -298,6 +301,15 @@ HRESULT InitD3D(HWND hWnd)
         vs.push_back("アイテムＯ");
         vs.push_back("アイテムＰ");
         menu.SetOutputList(vs);
+
+        menu.SetCraftingItem("アイテムＺＺＺＺＺ", 24);
+
+        vs.clear();
+        vs.push_back("アイテム１");
+        vs.push_back("アイテム２");
+        vs.push_back("アイテム３");
+        vs.push_back("アイテム４");
+        menu.SetCraftQue(vs);
 
         std::string work;
 

@@ -39,13 +39,16 @@ public:
               ISoundEffect* SE,
               ISprite* sprCursor,
               ISprite* sprBackground,
-              ISprite* sprPanelLeft);
+              ISprite* sprPanelLeft,
+              ISprite* sprPanelTop);
 
     void SetOutputList(const std::vector<std::string>& arg);
     void SetOutputInfo(const std::string& key, const std::string& value);
     void SetOutputImage(const std::string& key,
                         const std::string& imagePath,
                         ISprite* sprite);
+    void SetCraftingItem(const std::string& name, const int progress);
+    void SetCraftQue(const std::vector<std::string>& craftQue);
 
     std::string Up();
     std::string Down();
@@ -70,6 +73,7 @@ private:
     ISprite* m_sprCursor;
     ISprite* m_sprBackground;
     ISprite* m_sprPanelLeft;
+    ISprite* m_sprPanelTop;
     IFont* m_font;
     ISoundEffect* m_SE;
     eFocus m_eFocus = eFocus::OUTPUT;
@@ -102,6 +106,10 @@ private:
 
     // はい・いいえ選択のときのカーソル状態
     int m_confirmCursor = 0;
+
+    std::string m_craftingItem;
+    int m_progress = 0;
+    std::vector<std::string> m_craftQue;
 };
 }
 

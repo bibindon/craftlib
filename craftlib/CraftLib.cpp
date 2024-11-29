@@ -21,13 +21,15 @@ void CraftLib::Init(IFont* font,
                     ISoundEffect* SE,
                     ISprite* sprCursor,
                     ISprite* sprBackground,
-                    ISprite* sprPanelLeft)
+                    ISprite* sprPanelLeft,
+                    ISprite* sprPanelTop)
 {
     m_font = font;
     m_SE = SE;
     m_sprCursor = sprCursor;
     m_sprBackground = sprBackground;
     m_sprPanelLeft = sprPanelLeft;
+    m_sprPanelTop = sprPanelTop;
 }
 
 void NSCraftLib::CraftLib::SetOutputList(const std::vector<std::string>& arg)
@@ -47,6 +49,17 @@ void NSCraftLib::CraftLib::SetOutputImage(const std::string& key,
     sprite->Load(imagePath);
     m_imageMap[key] = sprite;
 
+}
+
+void NSCraftLib::CraftLib::SetCraftingItem(const std::string& name, const int progress)
+{
+    m_craftingItem = name;
+    m_progress = progress;
+}
+
+void NSCraftLib::CraftLib::SetCraftQue(const std::vector<std::string>& craftQue)
+{
+    m_craftQue = craftQue;
 }
 
 std::string CraftLib::Up()
@@ -661,6 +674,57 @@ void CraftLib::Draw()
             650,
             200 + LEFT_PANEL_PADDINGY + (m_leftCursor * LEFT_PANEL_HEIGHT)
         );
+    }
+
+    // クラフト中のアイテムと進捗度の表示
+    {
+        m_sprPanelTop->DrawImage(90, 73, 123);
+        m_sprPanelTop->DrawImage(370, 73);
+        m_font->DrawText_("クラフト中のアイテム", 100, 85);
+
+        // 8文字まで表示（全角8文字）
+        if (m_craftingItem.size() <= 8*2)
+        {
+            m_font->DrawText_(m_craftingItem, 400, 85);
+        }
+        // 表示しきれないときは7文字目まで表示＋「…」
+        else
+        {
+            m_font->DrawText_(m_craftingItem.substr(0, 14) + "…", 400, 85);
+        }
+
+        m_font->DrawText_("進捗度： " + std::to_string(m_progress) + " ％", 700, 85);
+    }
+
+    // 予約リストの表示
+    {
+        m_sprPanelTop->DrawImage(90, 133, 123);
+        m_font->DrawText_("予約リスト", 155, 145);
+
+        m_sprPanelTop->DrawImage(370, 133);
+        m_sprPanelTop->DrawImage(650, 133);
+        m_sprPanelTop->DrawImage(930, 133);
+        m_sprPanelTop->DrawImage(1210, 133);
+
+        for (std::size_t i = 0; i < m_craftQue.size(); ++i)
+        {
+            if (i >= 4)
+            {
+                break;
+            }
+            std::string work = m_craftQue.at(i);
+
+            // 8文字まで表示（全角8文字）
+            if (work.size() <= 8*2)
+            {
+                m_font->DrawText_(work, 400 + (280 * i), 145);
+            }
+            // 表示しきれないときは7文字目まで表示＋「…」
+            else
+            {
+                m_font->DrawText_(work.substr(0, 14) + "…", 400 + (280 * i), 145);
+            }
+        }
     }
 
 
