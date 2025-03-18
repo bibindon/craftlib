@@ -647,6 +647,13 @@ void CraftLib::Draw()
     std::string work;
     work = m_outputList.at(m_leftSelect);
 
+    // イカダ+1、のように強化値を含む名前だったら、+1の部分を削除する
+    auto index = work.find("+");
+    if (index != std::string::npos)
+    {
+        work.erase(index);
+    }
+
     if (m_imageMap.find(work) != m_imageMap.end())
     {
         m_imageMap.at(work)->DrawImage(550, 300);
