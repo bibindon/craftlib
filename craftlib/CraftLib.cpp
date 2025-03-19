@@ -159,8 +159,8 @@ std::string CraftLib::Into()
         else if (m_confirmCursor == 1)
         {
             m_SE->PlayBack();
-            m_eFocus = eFocus::OUTPUT;
         }
+        m_eFocus = eFocus::OUTPUT;
     }
     return result;
 }
@@ -735,7 +735,7 @@ void CraftLib::Draw()
     }
     else if (m_eFocus == eFocus::CONFIRM)
     {
-        m_sprCursor->DrawImage(610 + (m_confirmCursor * 160), 217 + (m_leftCursor * 60));
+        m_sprCursor->DrawImage(610 + (m_confirmCursor * 210), 217 + (m_leftCursor * 60));
     }
 
 
