@@ -731,11 +731,11 @@ void CraftLib::Draw()
     // カーソルの表示
     if (m_eFocus == eFocus::OUTPUT)
     {
-        m_sprCursor->DrawImage(80, 205 + (m_leftCursor * 60));
+        m_sprCursor->DrawImage(120, 217 + (m_leftCursor * 60));
     }
     else if (m_eFocus == eFocus::CONFIRM)
     {
-        m_sprCursor->DrawImage(570 + (m_confirmCursor * 160), 205 + (m_leftCursor * 60));
+        m_sprCursor->DrawImage(610 + (m_confirmCursor * 160), 217 + (m_leftCursor * 60));
     }
 
 
