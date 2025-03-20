@@ -693,7 +693,14 @@ void CraftLib::Draw()
             m_font->DrawText_(m_craftingItem.substr(0, 14) + "…", 400, 85);
         }
 
-        m_font->DrawText_("進捗度： " + std::to_string(m_progress) + " ％", 700, 85);
+        if (m_progress != -1)
+        {
+            m_font->DrawText_("進捗度： " + std::to_string(m_progress) + " ％", 700, 85);
+        }
+        else
+        {
+            m_font->DrawText_("進捗度： --- ％", 700, 85);
+        }
     }
 
     // 予約リストの表示
