@@ -61,8 +61,11 @@ void NSCraftLib::CraftLib::SetOutputImage(const std::string& key,
                                           const std::string& imagePath,
                                           ISprite* sprite)
 {
-    sprite->Load(imagePath);
-    m_imageMap[key] = sprite;
+    if (m_imageMap.find(key) == m_imageMap.end())
+    {
+		sprite->Load(imagePath);
+		m_imageMap[key] = sprite;
+    }
 }
 
 void NSCraftLib::CraftLib::SetCraftingItem(const std::string& name, const int progress)
