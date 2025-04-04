@@ -40,6 +40,11 @@ void NSCraftLib::CraftLib::Finalize()
     delete m_sprCursor;
     delete m_SE;
     delete m_font;
+
+    for (auto& it : m_imageMap)
+    {
+        delete it.second;
+    }
 }
 
 void NSCraftLib::CraftLib::SetOutputList(const std::vector<std::string>& arg)
@@ -58,7 +63,6 @@ void NSCraftLib::CraftLib::SetOutputImage(const std::string& key,
 {
     sprite->Load(imagePath);
     m_imageMap[key] = sprite;
-
 }
 
 void NSCraftLib::CraftLib::SetCraftingItem(const std::string& name, const int progress)
@@ -623,13 +627,13 @@ void CraftLib::Draw()
     if ((int)m_outputList.size() >= LEFT_PANEL_ROW_MAX)
     {
         for (int i = 0; i < LEFT_PANEL_ROW_MAX; ++i) {
-            m_sprPanelLeft->DrawImage(LEFT_PANEL_STARTX, LEFT_PANEL_STARTY + (LEFT_PANEL_HEIGHT * i));
+            m_sprPanelLeft->DrawImage(LEFT_PANEL_STARTX, LEFT_PANEL_STARTY + (LEFT_PANEL_HEIGHT * (int)i));
         }
     }
     else
     {
         for (std::size_t i = 0; i < m_outputList.size(); ++i) {
-            m_sprPanelLeft->DrawImage(LEFT_PANEL_STARTX, LEFT_PANEL_STARTY + (LEFT_PANEL_HEIGHT * i));
+            m_sprPanelLeft->DrawImage(LEFT_PANEL_STARTX, LEFT_PANEL_STARTY + (LEFT_PANEL_HEIGHT * (int)i));
         }
     }
 
@@ -640,7 +644,7 @@ void CraftLib::Draw()
         {
             m_font->DrawText_(m_outputList.at(i),
                               LEFT_PANEL_STARTX + LEFT_PANEL_PADDINGX,
-                              LEFT_PANEL_STARTY + LEFT_PANEL_PADDINGY + ((i - m_leftBegin) * LEFT_PANEL_HEIGHT));
+                              LEFT_PANEL_STARTY + LEFT_PANEL_PADDINGY + (((int)i - m_leftBegin) * LEFT_PANEL_HEIGHT));
         }
     }
     else
@@ -649,7 +653,7 @@ void CraftLib::Draw()
         {
             m_font->DrawText_(m_outputList.at(i),
                               LEFT_PANEL_STARTX + LEFT_PANEL_PADDINGX,
-                              LEFT_PANEL_STARTY + LEFT_PANEL_PADDINGY + (i * LEFT_PANEL_HEIGHT));
+                              LEFT_PANEL_STARTY + LEFT_PANEL_PADDINGY + ((int)i * LEFT_PANEL_HEIGHT));
         }
     }
 
@@ -671,7 +675,7 @@ void CraftLib::Draw()
         m_font->DrawText_(
             details.at(i),
             1100,
-            250 + i * 40
+            250 + (int)i * 40
         );
     }
 
@@ -734,12 +738,12 @@ void CraftLib::Draw()
             // 8文字まで表示（全角8文字）
             if (work.size() <= 8*2)
             {
-                m_font->DrawText_(work, 400 + (280 * i), 145);
+                m_font->DrawText_(work, 400 + (280 * (int)i), 145);
             }
             // 表示しきれないときは7文字目まで表示＋「…」
             else
             {
-                m_font->DrawText_(work.substr(0, 14) + "…", 400 + (280 * i), 145);
+                m_font->DrawText_(work.substr(0, 14) + "…", 400 + (280 * (int)i), 145);
             }
         }
     }
