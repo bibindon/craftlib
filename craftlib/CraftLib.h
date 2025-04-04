@@ -42,6 +42,8 @@ public:
               ISprite* sprPanelLeft,
               ISprite* sprPanelTop);
 
+    void Finalize();
+
     void SetOutputList(const std::vector<std::string>& arg);
     void SetOutputInfo(const std::string& key, const std::string& value);
     void SetOutputImage(const std::string& key,

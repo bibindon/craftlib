@@ -32,6 +32,16 @@ void CraftLib::Init(IFont* font,
     m_sprPanelTop = sprPanelTop;
 }
 
+void NSCraftLib::CraftLib::Finalize()
+{
+    delete m_sprPanelTop;
+    delete m_sprPanelLeft;
+    delete m_sprBackground;
+    delete m_sprCursor;
+    delete m_SE;
+    delete m_font;
+}
+
 void NSCraftLib::CraftLib::SetOutputList(const std::vector<std::string>& arg)
 {
     m_outputList = arg;
