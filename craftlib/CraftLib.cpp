@@ -22,7 +22,8 @@ void CraftLib::Init(IFont* font,
                     ISprite* sprCursor,
                     ISprite* sprBackground,
                     ISprite* sprPanelLeft,
-                    ISprite* sprPanelTop)
+                    ISprite* sprPanelTop,
+                    const bool bEnglish)
 {
     m_font = font;
     m_SE = SE;
@@ -30,6 +31,10 @@ void CraftLib::Init(IFont* font,
     m_sprBackground = sprBackground;
     m_sprPanelLeft = sprPanelLeft;
     m_sprPanelTop = sprPanelTop;
+    m_bEnglish = bEnglish;
+
+    m_font->Init(m_bEnglish);
+    m_SE->Init();
 }
 
 void NSCraftLib::CraftLib::Finalize()
@@ -686,18 +691,33 @@ void CraftLib::Draw()
     if (m_eFocus == eFocus::CONFIRM)
     {
         m_sprPanelLeft->DrawImage(550, 200 + (m_leftCursor * LEFT_PANEL_HEIGHT));
-        m_font->DrawText_(
-            "クラフトする　　しない",
-            650,
-            200 + LEFT_PANEL_PADDINGY + (m_leftCursor * LEFT_PANEL_HEIGHT)
-        );
+        if (!m_bEnglish)
+        {
+            m_font->DrawText_("クラフトする　　しない",
+                              650,
+                              200 + LEFT_PANEL_PADDINGY + (m_leftCursor * LEFT_PANEL_HEIGHT) );
+        }
+        else
+        {
+            m_font->DrawText_("Craft           Cancel",
+                              650,
+                              200 + LEFT_PANEL_PADDINGY + (m_leftCursor * LEFT_PANEL_HEIGHT) );
+        }
     }
 
     // クラフト中のアイテムと進捗度の表示
     {
         m_sprPanelTop->DrawImage(90, 73, 123);
         m_sprPanelTop->DrawImage(370, 73);
-        m_font->DrawText_("クラフト中のアイテム", 100, 85);
+
+        if (!m_bEnglish)
+        {
+            m_font->DrawText_("クラフト中のアイテム", 100, 85);
+        }
+        else
+        {
+            m_font->DrawText_("Crafting item", 100, 85);
+        }
 
         // 8文字まで表示（全角8文字）
         if (m_craftingItem.size() <= 8*2)
@@ -712,18 +732,40 @@ void CraftLib::Draw()
 
         if (m_progress == -1)
         {
-            m_font->DrawText_("進捗度： 0 ％", 700, 85);
+            if (!m_bEnglish)
+            {
+                m_font->DrawText_("進捗度： 0 ％", 700, 85);
+            }
+            else
+            {
+                m_font->DrawText_("Progress : 0 %", 700, 85);
+            }
         }
         else
         {
-            m_font->DrawText_("進捗度： " + std::to_string(m_progress) + " ％", 700, 85);
+            if (!m_bEnglish)
+            {
+                m_font->DrawText_("進捗度： " + std::to_string(m_progress) + " ％", 700, 85);
+            }
+            else
+            {
+                m_font->DrawText_("Progress : " + std::to_string(m_progress) + " %", 700, 85);
+            }
         }
     }
 
     // 予約リストの表示
     {
         m_sprPanelTop->DrawImage(90, 133, 123);
-        m_font->DrawText_("予約リスト", 155, 145);
+
+        if (!m_bEnglish)
+        {
+            m_font->DrawText_("予約リスト", 155, 145);
+        }
+        else
+        {
+            m_font->DrawText_("Request list", 155, 145);
+        }
 
         m_sprPanelTop->DrawImage(370, 133);
         m_sprPanelTop->DrawImage(650, 133);

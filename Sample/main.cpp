@@ -97,21 +97,38 @@ public:
     {
     }
 
-    void Init()
+    void Init(const bool bEnglish)
     {
-        HRESULT hr = D3DXCreateFont(
-            m_pD3DDevice,
-            24,
-            0,
-            FW_NORMAL,
-            1,
-            false,
-            SHIFTJIS_CHARSET,
-            OUT_TT_ONLY_PRECIS,
-            ANTIALIASED_QUALITY,
-            FF_DONTCARE,
-            "‚l‚r –¾’©",
-            &m_pFont);
+        if (!bEnglish)
+        {
+            HRESULT hr = D3DXCreateFont(m_pD3DDevice,
+                                        24,
+                                        0,
+                                        FW_NORMAL,
+                                        1,
+                                        false,
+                                        SHIFTJIS_CHARSET,
+                                        OUT_TT_ONLY_PRECIS,
+                                        ANTIALIASED_QUALITY,
+                                        FF_DONTCARE,
+                                        "‚l‚r –¾’©",
+                                        &m_pFont);
+        }
+        else
+        {
+            HRESULT hr = D3DXCreateFont(m_pD3DDevice,
+                                        24,
+                                        0,
+                                        FW_NORMAL,
+                                        1,
+                                        false,
+                                        DEFAULT_CHARSET,
+                                        OUT_TT_ONLY_PRECIS,
+                                        CLEARTYPE_NATURAL_QUALITY,
+                                        FF_DONTCARE,
+                                        "Courier New",
+                                        &m_pFont);
+        }
     }
 
     virtual void DrawText_(const std::string& msg, const int x, const int y)
@@ -276,11 +293,13 @@ HRESULT InitD3D(HWND hWnd)
     sprPanelTop->Load("craftPanel.png");
 
     IFont* pFont = new Font(g_pd3dDevice);
-    pFont->Init();
 
     ISoundEffect* pSE = new SoundEffect();
 
-    menu.Init(pFont, pSE, sprCursor, sprBackground, sprPanelLeft, sprPanelTop);
+    bool bEnglish = true;
+    menu.Init(pFont, pSE, sprCursor, sprBackground, sprPanelLeft, sprPanelTop, bEnglish);
+
+    if (!bEnglish)
     {
         std::vector<std::string> vs;
 
@@ -600,6 +619,292 @@ HRESULT InitD3D(HWND hWnd)
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
             menu.SetOutputImage("ƒAƒCƒeƒ€‚o", "item1.png", sprite2);
+        }
+    }
+    else
+    {
+        std::vector<std::string> vs;
+
+        vs.push_back("item_AAA");
+        vs.push_back("item_BBB");
+        vs.push_back("item_CCC");
+        vs.push_back("item_DDD");
+        vs.push_back("item_EEE");
+        vs.push_back("item_FFF");
+        vs.push_back("item_GGG");
+        vs.push_back("item_HHH");
+        vs.push_back("item_III");
+        vs.push_back("item_JJJ");
+        vs.push_back("item_KKK");
+        vs.push_back("item_LLL");
+        vs.push_back("item_MMM");
+        vs.push_back("item_NNN");
+        vs.push_back("item_OOO");
+        vs.push_back("item_PPP");
+        menu.SetOutputList(vs);
+
+        menu.SetCraftingItem("item_zzzzz", 24);
+
+        vs.clear();
+        vs.push_back("item_1");
+        vs.push_back("item_2");
+        vs.push_back("item_3");
+        vs.push_back("item_4");
+        menu.SetCraftQue(vs);
+
+        std::string work;
+
+        {
+            work = "Output name : item_AAA\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_AAA", work);
+
+            ISprite* sprite1 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_AAA", "item1.png", sprite1);
+        }
+        {
+            work = "Output name : item_BBB\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_BBB", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_BBB", "item2.png", sprite2);
+        }
+        {
+            work = "Output name : item_CCC\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_CCC", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_CCC", "item2.png", sprite2);
+        }
+        {
+            work = "Output name : item_DDD\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_DDD", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_DDD", "item2.png", sprite2);
+        }
+        {
+            work = "Output name : item_EEE\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_EEE", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_EEE", "item2.png", sprite2);
+        }
+        {
+            work = "Output name : item_FFF\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_FFF", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_FFF", "item2.png", sprite2);
+        }
+        {
+            work = "Output name : item_GGG\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_GGG", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_GGG", "item2.png", sprite2);
+        }
+        {
+            work = "Output name : item_HHH\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_HHH", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_HHH", "item2.png", sprite2);
+        }
+        {
+            work = "Output name : item_III\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_III", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_III", "item2.png", sprite2);
+        }
+        {
+            work = "Output name : item_JJJ\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_JJJ", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_JJJ", "item2.png", sprite2);
+        }
+        {
+            work = "Output name : item_KKK\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_KKK", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_KKK", "item2.png", sprite2);
+        }
+        {
+            work = "Output name : item_NNN\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_NNN", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_NNN", "item2.png", sprite2);
+        }
+        {
+            work = "Output name : item_OOO\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_OOO", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_OOO", "item2.png", sprite2);
+        }
+        {
+            work = "Output name : item_PPP\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_PPP", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_PPP", "item2.png", sprite2);
         }
     }
 

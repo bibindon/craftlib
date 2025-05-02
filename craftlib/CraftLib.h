@@ -17,7 +17,7 @@ class IFont
 {
 public:
     virtual void DrawText_(const std::string& msg, const int x, const int y) = 0;
-    virtual void Init() = 0;
+    virtual void Init(const bool bEnglish) = 0;
     virtual ~IFont() {};
 };
 
@@ -40,7 +40,8 @@ public:
               ISprite* sprCursor,
               ISprite* sprBackground,
               ISprite* sprPanelLeft,
-              ISprite* sprPanelTop);
+              ISprite* sprPanelTop,
+              const bool bEnglish);
 
     void Finalize();
 
@@ -112,6 +113,8 @@ private:
     std::string m_craftingItem;
     int m_progress = 0;
     std::vector<std::string> m_craftQue;
+
+    bool m_bEnglish = false;
 };
 }
 
