@@ -92,16 +92,14 @@ std::string CraftLib::Up()
         {
             m_leftSelect--;
             m_SE->PlayMove();
-        }
-        // カーソルが一番上にあるときに上ボタンを押されたら
-        // カーソルはそのままでリストが下に移動する
-        if (m_leftCursor != 0)
-        {
-            m_leftCursor--;
-        }
-        else if (m_leftCursor == 0)
-        {
-            if (m_leftSelect != 0)
+
+            // カーソルが一番上にあるときに上ボタンを押されたら
+            // カーソルはそのままでリストが下に移動する
+            if (m_leftCursor != 0)
+            {
+                m_leftCursor--;
+            }
+            else
             {
                 m_leftBegin--;
             }
@@ -118,17 +116,14 @@ std::string CraftLib::Down()
         {
             m_leftSelect++;
             m_SE->PlayMove();
-        }
 
-        // カーソルが一番下にあるときに下ボタンを押されたら
-        // カーソルはそのままでリストが上に移動する
-        if (m_leftCursor != LEFT_PANEL_ROW_MAX - 1)
-        {
-            m_leftCursor++;
-        }
-        else if (m_leftCursor == LEFT_PANEL_ROW_MAX - 1)
-        {
-            if (m_leftSelect != (int)m_outputList.size() - 1)
+            // カーソルが一番下にあるときに下ボタンを押されたら
+            // カーソルはそのままでリストが上に移動する
+            if (m_leftCursor != LEFT_PANEL_ROW_MAX - 1)
+            {
+                m_leftCursor++;
+            }
+            else
             {
                 m_leftBegin++;
             }
@@ -211,17 +206,14 @@ std::string NSCraftLib::CraftLib::Next()
         {
             m_leftSelect++;
             m_SE->PlayMove();
-        }
 
-        // カーソルが一番下にあるときに下ボタンを押されたら
-        // カーソルはそのままでリストが上に移動する
-        if (m_leftCursor != LEFT_PANEL_ROW_MAX - 1)
-        {
-            m_leftCursor++;
-        }
-        else if (m_leftCursor == LEFT_PANEL_ROW_MAX - 1)
-        {
-            if (m_leftSelect != (int)m_outputList.size() - 1)
+            // カーソルが一番下にあるときに下ボタンを押されたら
+            // カーソルはそのままでリストが上に移動する
+            if (m_leftCursor != LEFT_PANEL_ROW_MAX - 1)
+            {
+                m_leftCursor++;
+            }
+            else
             {
                 m_leftBegin++;
             }
@@ -238,16 +230,14 @@ std::string NSCraftLib::CraftLib::Previous()
         {
             m_leftSelect--;
             m_SE->PlayMove();
-        }
-        // カーソルが一番上にあるときに上ボタンを押されたら
-        // カーソルはそのままでリストが下に移動する
-        if (m_leftCursor != 0)
-        {
-            m_leftCursor--;
-        }
-        else if (m_leftCursor == 0)
-        {
-            if (m_leftSelect != 0)
+
+            // カーソルが一番上にあるときに上ボタンを押されたら
+            // カーソルはそのままでリストが下に移動する
+            if (m_leftCursor != 0)
+            {
+                m_leftCursor--;
+            }
+            else
             {
                 m_leftBegin--;
             }
