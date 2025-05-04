@@ -853,6 +853,42 @@ HRESULT InitD3D(HWND hWnd)
             menu.SetOutputImage("item_KKK", "item2.png", sprite2);
         }
         {
+            work = "Output name : item_LLL\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_LLL", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_LLL", "item2.png", sprite2);
+        }
+        {
+            work = "Output name : item_MMM\n";
+            work += "Output num : 1\n";
+            work += "Output level\n";
+            work += "\n";
+            work += "Material 1 name : item_BBB\n";
+            work += "Material 1 num : 10\n";
+            work += "Material 1 level : 1\n";
+            work += "\n";
+            work += "Material 2 name : item_CCC\n";
+            work += "Material 2 num : 20\n";
+            work += "Material 2 level : 2\n";
+
+            menu.SetOutputInfo("item_MMM", work);
+
+            ISprite* sprite2 = new Sprite(g_pd3dDevice);
+            menu.SetOutputImage("item_MMM", "item2.png", sprite2);
+        }
+        {
             work = "Output name : item_NNN\n";
             work += "Output num : 1\n";
             work += "Output level\n";
