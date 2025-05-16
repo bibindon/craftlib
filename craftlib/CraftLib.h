@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -96,18 +96,18 @@ private:
 
     const int LEFT_PANEL_ROW_MAX = 10;
 
-    // �X�N���[���\�ł��邱�Ƃ��l������
-    // �ォ���ʏ�ŉ��ԖڂɃJ�[�\�������邩�B
+    // スクロール可能であることを考慮する
+    // 上から画面上で何番目にカーソルがあるか。
     int m_leftCursor = 0;
 
-    // �J�[�\�����I�����Ă���v�f��m_outputList�̉��Ԗڂ̗v�f���B
+    // カーソルが選択している要素がm_outputListの何番目の要素か。
     int m_leftSelect = 0;
 
-    // ���Ԗڂ̃A�C�e������ԏ�ɕ\������Ă��邩
-    // �X�N���[���\�Ȃ̂ň�ԏ�ɕ\�������A�C�e���̓X�N���[������ƕς��B
+    // 何番目のアイテムが一番上に表示されているか
+    // スクロール可能なので一番上に表示されるアイテムはスクロールすると変わる。
     int m_leftBegin = 0;
 
-    // �͂��E�������I���̂Ƃ��̃J�[�\�����
+    // はい・いいえ選択のときのカーソル状態
     int m_confirmCursor = 0;
 
     std::string m_craftingItem;

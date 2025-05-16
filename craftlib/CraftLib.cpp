@@ -1,4 +1,4 @@
-#include "CraftLib.h"
+ï»¿#include "CraftLib.h"
 #include <sstream>
 
 using namespace NSCraftLib;
@@ -93,8 +93,8 @@ std::string CraftLib::Up()
             m_leftSelect--;
             m_SE->PlayMove();
 
-            // ƒJ[ƒ\ƒ‹‚ªˆê”Ôã‚É‚ ‚é‚Æ‚«‚Éãƒ{ƒ^ƒ“‚ğ‰Ÿ‚³‚ê‚½‚ç
-            // ƒJ[ƒ\ƒ‹‚Í‚»‚Ì‚Ü‚Ü‚ÅƒŠƒXƒg‚ª‰º‚ÉˆÚ“®‚·‚é
+            // ã‚«ãƒ¼ã‚½ãƒ«ãŒä¸€ç•ªä¸Šã«ã‚ã‚‹ã¨ãã«ä¸Šãƒœã‚¿ãƒ³ã‚’æŠ¼ã•ã‚ŒãŸã‚‰
+            // ã‚«ãƒ¼ã‚½ãƒ«ã¯ãã®ã¾ã¾ã§ãƒªã‚¹ãƒˆãŒä¸‹ã«ç§»å‹•ã™ã‚‹
             if (m_leftCursor != 0)
             {
                 m_leftCursor--;
@@ -117,8 +117,8 @@ std::string CraftLib::Down()
             m_leftSelect++;
             m_SE->PlayMove();
 
-            // ƒJ[ƒ\ƒ‹‚ªˆê”Ô‰º‚É‚ ‚é‚Æ‚«‚É‰ºƒ{ƒ^ƒ“‚ğ‰Ÿ‚³‚ê‚½‚ç
-            // ƒJ[ƒ\ƒ‹‚Í‚»‚Ì‚Ü‚Ü‚ÅƒŠƒXƒg‚ªã‚ÉˆÚ“®‚·‚é
+            // ã‚«ãƒ¼ã‚½ãƒ«ãŒä¸€ç•ªä¸‹ã«ã‚ã‚‹ã¨ãã«ä¸‹ãƒœã‚¿ãƒ³ã‚’æŠ¼ã•ã‚ŒãŸã‚‰
+            // ã‚«ãƒ¼ã‚½ãƒ«ã¯ãã®ã¾ã¾ã§ãƒªã‚¹ãƒˆãŒä¸Šã«ç§»å‹•ã™ã‚‹
             if (m_leftCursor != LEFT_PANEL_ROW_MAX - 1)
             {
                 m_leftCursor++;
@@ -207,8 +207,8 @@ std::string NSCraftLib::CraftLib::Next()
             m_leftSelect++;
             m_SE->PlayMove();
 
-            // ƒJ[ƒ\ƒ‹‚ªˆê”Ô‰º‚É‚ ‚é‚Æ‚«‚É‰ºƒ{ƒ^ƒ“‚ğ‰Ÿ‚³‚ê‚½‚ç
-            // ƒJ[ƒ\ƒ‹‚Í‚»‚Ì‚Ü‚Ü‚ÅƒŠƒXƒg‚ªã‚ÉˆÚ“®‚·‚é
+            // ã‚«ãƒ¼ã‚½ãƒ«ãŒä¸€ç•ªä¸‹ã«ã‚ã‚‹ã¨ãã«ä¸‹ãƒœã‚¿ãƒ³ã‚’æŠ¼ã•ã‚ŒãŸã‚‰
+            // ã‚«ãƒ¼ã‚½ãƒ«ã¯ãã®ã¾ã¾ã§ãƒªã‚¹ãƒˆãŒä¸Šã«ç§»å‹•ã™ã‚‹
             if (m_leftCursor != LEFT_PANEL_ROW_MAX - 1)
             {
                 m_leftCursor++;
@@ -231,8 +231,8 @@ std::string NSCraftLib::CraftLib::Previous()
             m_leftSelect--;
             m_SE->PlayMove();
 
-            // ƒJ[ƒ\ƒ‹‚ªˆê”Ôã‚É‚ ‚é‚Æ‚«‚Éãƒ{ƒ^ƒ“‚ğ‰Ÿ‚³‚ê‚½‚ç
-            // ƒJ[ƒ\ƒ‹‚Í‚»‚Ì‚Ü‚Ü‚ÅƒŠƒXƒg‚ª‰º‚ÉˆÚ“®‚·‚é
+            // ã‚«ãƒ¼ã‚½ãƒ«ãŒä¸€ç•ªä¸Šã«ã‚ã‚‹ã¨ãã«ä¸Šãƒœã‚¿ãƒ³ã‚’æŠ¼ã•ã‚ŒãŸã‚‰
+            // ã‚«ãƒ¼ã‚½ãƒ«ã¯ãã®ã¾ã¾ã§ãƒªã‚¹ãƒˆãŒä¸‹ã«ç§»å‹•ã™ã‚‹
             if (m_leftCursor != 0)
             {
                 m_leftCursor--;
@@ -618,10 +618,10 @@ std::string CraftLib::Click(const int x, const int y)
 
 void CraftLib::Draw()
 {
-    // ”wŒi
+    // èƒŒæ™¯
     m_sprBackground->DrawImage(0, 0);
 
-    // ¶‚Ì—ñ‚Ì”wŒi
+    // å·¦ã®åˆ—ã®èƒŒæ™¯
     if ((int)m_outputList.size() >= LEFT_PANEL_ROW_MAX)
     {
         for (int i = 0; i < LEFT_PANEL_ROW_MAX; ++i) {
@@ -635,7 +635,7 @@ void CraftLib::Draw()
         }
     }
 
-    // ¶‚Ì—ñ‚Ì•¶šA¬‰Ê•¨‚Ì–¼Ì
+    // å·¦ã®åˆ—ã®æ–‡å­—ã€æˆæœç‰©ã®åç§°
     if ((int)m_outputList.size() >= LEFT_PANEL_ROW_MAX)
     {
         for (int i = m_leftBegin; i < m_leftBegin + LEFT_PANEL_ROW_MAX; ++i)
@@ -655,7 +655,7 @@ void CraftLib::Draw()
         }
     }
 
-    // ’†‰›‚Ì‰æ‘œ
+    // ä¸­å¤®ã®ç”»åƒ
     std::string work;
     work = m_outputList.at(m_leftSelect);
 
@@ -664,7 +664,7 @@ void CraftLib::Draw()
         m_imageMap.at(work)->DrawImage(550, 300);
     }
 
-    // ‰E‘¤‚Ìà–¾ƒeƒLƒXƒg
+    // å³å´ã®èª¬æ˜ãƒ†ã‚­ã‚¹ãƒˆ
     std::string detail = m_outputInfoMap.at(work);
     std::vector<std::string> details = split(detail, '\n');
 
@@ -677,13 +677,13 @@ void CraftLib::Draw()
         );
     }
 
-    // ‚Í‚¢E‚¢‚¢‚¦‚Ì•\¦
+    // ã¯ã„ãƒ»ã„ã„ãˆã®è¡¨ç¤º
     if (m_eFocus == eFocus::CONFIRM)
     {
         m_sprPanelLeft->DrawImage(550, 200 + (m_leftCursor * LEFT_PANEL_HEIGHT));
         if (!m_bEnglish)
         {
-            m_font->DrawText_("ƒNƒ‰ƒtƒg‚·‚é@@‚µ‚È‚¢",
+            m_font->DrawText_("ã‚¯ãƒ©ãƒ•ãƒˆã™ã‚‹ã€€ã€€ã—ãªã„",
                               650,
                               200 + LEFT_PANEL_PADDINGY + (m_leftCursor * LEFT_PANEL_HEIGHT) );
         }
@@ -695,36 +695,36 @@ void CraftLib::Draw()
         }
     }
 
-    // ƒNƒ‰ƒtƒg’†‚ÌƒAƒCƒeƒ€‚Æi’»“x‚Ì•\¦
+    // ã‚¯ãƒ©ãƒ•ãƒˆä¸­ã®ã‚¢ã‚¤ãƒ†ãƒ ã¨é€²æ—åº¦ã®è¡¨ç¤º
     {
         m_sprPanelTop->DrawImage(90, 73, 123);
         m_sprPanelTop->DrawImage(370, 73);
 
         if (!m_bEnglish)
         {
-            m_font->DrawText_("ƒNƒ‰ƒtƒg’†‚ÌƒAƒCƒeƒ€", 100, 85);
+            m_font->DrawText_("ã‚¯ãƒ©ãƒ•ãƒˆä¸­ã®ã‚¢ã‚¤ãƒ†ãƒ ", 100, 85);
         }
         else
         {
             m_font->DrawText_("Crafting item", 100, 85);
         }
 
-        // 8•¶š‚Ü‚Å•\¦i‘SŠp8•¶šj
+        // 8æ–‡å­—ã¾ã§è¡¨ç¤ºï¼ˆå…¨è§’8æ–‡å­—ï¼‰
         if (m_craftingItem.size() <= 8*2)
         {
             m_font->DrawText_(m_craftingItem, 400, 85);
         }
-        // •\¦‚µ‚«‚ê‚È‚¢‚Æ‚«‚Í7•¶š–Ú‚Ü‚Å•\¦{ucv
+        // è¡¨ç¤ºã—ãã‚Œãªã„ã¨ãã¯7æ–‡å­—ç›®ã¾ã§è¡¨ç¤ºï¼‹ã€Œâ€¦ã€
         else
         {
-            m_font->DrawText_(m_craftingItem.substr(0, 14) + "c", 400, 85);
+            m_font->DrawText_(m_craftingItem.substr(0, 14) + "â€¦", 400, 85);
         }
 
         if (m_progress == -1)
         {
             if (!m_bEnglish)
             {
-                m_font->DrawText_("i’»“xF 0 “", 700, 85);
+                m_font->DrawText_("é€²æ—åº¦ï¼š 0 ï¼…", 700, 85);
             }
             else
             {
@@ -735,7 +735,7 @@ void CraftLib::Draw()
         {
             if (!m_bEnglish)
             {
-                m_font->DrawText_("i’»“xF " + std::to_string(m_progress) + " “", 700, 85);
+                m_font->DrawText_("é€²æ—åº¦ï¼š " + std::to_string(m_progress) + " ï¼…", 700, 85);
             }
             else
             {
@@ -744,13 +744,13 @@ void CraftLib::Draw()
         }
     }
 
-    // —\–ñƒŠƒXƒg‚Ì•\¦
+    // äºˆç´„ãƒªã‚¹ãƒˆã®è¡¨ç¤º
     {
         m_sprPanelTop->DrawImage(90, 133, 123);
 
         if (!m_bEnglish)
         {
-            m_font->DrawText_("—\–ñƒŠƒXƒg", 155, 145);
+            m_font->DrawText_("äºˆç´„ãƒªã‚¹ãƒˆ", 155, 145);
         }
         else
         {
@@ -770,21 +770,21 @@ void CraftLib::Draw()
             }
             std::string work = m_craftQue.at(i);
 
-            // 8•¶š‚Ü‚Å•\¦i‘SŠp8•¶šj
+            // 8æ–‡å­—ã¾ã§è¡¨ç¤ºï¼ˆå…¨è§’8æ–‡å­—ï¼‰
             if (work.size() <= 8*2)
             {
                 m_font->DrawText_(work, 400 + (280 * (int)i), 145);
             }
-            // •\¦‚µ‚«‚ê‚È‚¢‚Æ‚«‚Í7•¶š–Ú‚Ü‚Å•\¦{ucv
+            // è¡¨ç¤ºã—ãã‚Œãªã„ã¨ãã¯7æ–‡å­—ç›®ã¾ã§è¡¨ç¤ºï¼‹ã€Œâ€¦ã€
             else
             {
-                m_font->DrawText_(work.substr(0, 14) + "c", 400 + (280 * (int)i), 145);
+                m_font->DrawText_(work.substr(0, 14) + "â€¦", 400 + (280 * (int)i), 145);
             }
         }
     }
 
 
-    // ƒJ[ƒ\ƒ‹‚Ì•\¦
+    // ã‚«ãƒ¼ã‚½ãƒ«ã®è¡¨ç¤º
     if (m_eFocus == eFocus::OUTPUT)
     {
         m_sprCursor->DrawImage(120, 217 + (m_leftCursor * 60));

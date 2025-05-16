@@ -1,4 +1,4 @@
-#pragma comment( lib, "d3d9.lib" )
+ï»¿#pragma comment( lib, "d3d9.lib" )
 #if defined(DEBUG) || defined(_DEBUG)
 #pragma comment( lib, "d3dx9d.lib" )
 #else
@@ -111,7 +111,7 @@ public:
                                         OUT_TT_ONLY_PRECIS,
                                         ANTIALIASED_QUALITY,
                                         FF_DONTCARE,
-                                        "‚l‚r –¾’©",
+                                        "ï¼­ï¼³ æ˜æœ",
                                         &m_pFont);
         }
         else
@@ -231,7 +231,7 @@ HRESULT InitD3D(HWND hWnd)
         OUT_TT_ONLY_PRECIS,
         ANTIALIASED_QUALITY,
         FF_DONTCARE,
-        "‚l‚r ƒSƒVƒbƒN",
+        "ï¼­ï¼³ ã‚´ã‚·ãƒƒã‚¯",
         &g_pFont);
     if FAILED(hr)
     {
@@ -244,7 +244,7 @@ HRESULT InitD3D(HWND hWnd)
         g_pd3dDevice, NULL, &pD3DXMtrlBuffer, NULL,
         &dwNumMaterials, &pMesh)))
     {
-        MessageBox(NULL, "Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ‚É¸”s‚µ‚Ü‚µ‚½", NULL, MB_OK);
+        MessageBox(NULL, "Xãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸ", NULL, MB_OK);
         return E_FAIL;
     }
     d3dxMaterials = (D3DXMATERIAL*)pD3DXMtrlBuffer->GetBufferPointer();
@@ -263,7 +263,7 @@ HRESULT InitD3D(HWND hWnd)
                 d3dxMaterials[i].pTextureFilename,
                 &pTextures[i])))
             {
-                MessageBox(NULL, "ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ‚É¸”s‚µ‚Ü‚µ‚½", NULL, MB_OK);
+                MessageBox(NULL, "ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸ", NULL, MB_OK);
             }
         }
     }
@@ -303,322 +303,322 @@ HRESULT InitD3D(HWND hWnd)
     {
         std::vector<std::string> vs;
 
-        vs.push_back("ƒAƒCƒeƒ€‚`‚`‚`");
-        vs.push_back("•Ší‚a‚a‚a");
-        vs.push_back("ƒAƒCƒeƒ€‚b");
-        vs.push_back("ƒAƒCƒeƒ€‚c");
-        vs.push_back("ƒAƒCƒeƒ€‚d");
-        vs.push_back("ƒAƒCƒeƒ€‚e");
-        vs.push_back("ƒAƒCƒeƒ€‚f");
-        vs.push_back("ƒAƒCƒeƒ€‚g");
-        vs.push_back("ƒAƒCƒeƒ€‚h");
-        vs.push_back("ƒAƒCƒeƒ€‚i");
-        vs.push_back("ƒAƒCƒeƒ€‚j");
-        vs.push_back("ƒAƒCƒeƒ€‚k");
-        vs.push_back("ƒAƒCƒeƒ€‚l");
-        vs.push_back("ƒAƒCƒeƒ€‚m");
-        vs.push_back("ƒAƒCƒeƒ€‚n");
-        vs.push_back("ƒAƒCƒeƒ€‚o");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼¡ï¼¡ï¼¡");
+        vs.push_back("æ­¦å™¨ï¼¢ï¼¢ï¼¢");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼£");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼¤");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼¥");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼¦");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼§");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼¨");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼©");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼ª");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼«");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼¬");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼­");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼®");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼¯");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼°");
         menu.SetOutputList(vs);
 
-        menu.SetCraftingItem("ƒAƒCƒeƒ€‚y‚y‚y‚y‚y", 24);
+        menu.SetCraftingItem("ã‚¢ã‚¤ãƒ†ãƒ ï¼ºï¼ºï¼ºï¼ºï¼º", 24);
 
         vs.clear();
-        vs.push_back("ƒAƒCƒeƒ€‚P");
-        vs.push_back("ƒAƒCƒeƒ€‚Q");
-        vs.push_back("ƒAƒCƒeƒ€‚R");
-        vs.push_back("ƒAƒCƒeƒ€‚S");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼‘");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼’");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼“");
+        vs.push_back("ã‚¢ã‚¤ãƒ†ãƒ ï¼”");
         menu.SetCraftQue(vs);
 
         std::string work;
 
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OFƒAƒCƒeƒ€‚`‚`‚`\n";
-            work += "¬‰Ê•¨‚Ì”F‚P\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“x\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šã‚¢ã‚¤ãƒ†ãƒ ï¼¡ï¼¡ï¼¡\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼‘\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚ ‚ ‚ \n";
-            work += "‘fŞ‚P‚Ì”F‚P‚O\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‚ã‚ã‚\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚¢‚¢‚¢\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚O\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåã„ã„ã„\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("ƒAƒCƒeƒ€‚`‚`‚`", work);
+            menu.SetOutputInfo("ã‚¢ã‚¤ãƒ†ãƒ ï¼¡ï¼¡ï¼¡", work);
 
             ISprite* sprite1 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("ƒAƒCƒeƒ€‚`‚`‚`", "item1.png", sprite1);
+            menu.SetOutputImage("ã‚¢ã‚¤ãƒ†ãƒ ï¼¡ï¼¡ï¼¡", "item1.png", sprite1);
         }
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OF•Ší‚a‚a‚a\n";
-            work += "¬‰Ê•¨‚Ì”F‚Q\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“xF‚Q\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šæ­¦å™¨ï¼¢ï¼¢ï¼¢\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼’\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦ï¼šï¼’\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚©‚©‚©‚©‚©\n";
-            work += "‘fŞ‚P‚Ì”F‚P‚P‚P\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‹ã‹ã‹ã‹ã‹\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼‘ï¼‘\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚«‚«‚«‚«‚«\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚Q‚Q\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåããããã\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼’ï¼’\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("•Ší‚a‚a‚a", work);
+            menu.SetOutputInfo("æ­¦å™¨ï¼¢ï¼¢ï¼¢", work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("•Ší‚a‚a‚a", "item2.png", sprite2);
+            menu.SetOutputImage("æ­¦å™¨ï¼¢ï¼¢ï¼¢", "item2.png", sprite2);
         }
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OFƒAƒCƒeƒ€‚b\n";
-            work += "¬‰Ê•¨‚Ì”F‚Q\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“xF‚Q\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šã‚¢ã‚¤ãƒ†ãƒ ï¼£\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼’\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦ï¼šï¼’\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚©‚©‚©‚©‚©\n";
-            work += "‘fŞ‚P‚Ì”F‚P‚P‚P\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‹ã‹ã‹ã‹ã‹\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼‘ï¼‘\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚«‚«‚«‚«‚«\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚Q‚Q\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåããããã\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼’ï¼’\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("ƒAƒCƒeƒ€‚b", work);
+            menu.SetOutputInfo("ã‚¢ã‚¤ãƒ†ãƒ ï¼£", work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("ƒAƒCƒeƒ€‚b", "item3.png", sprite2);
+            menu.SetOutputImage("ã‚¢ã‚¤ãƒ†ãƒ ï¼£", "item3.png", sprite2);
         }
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OFƒAƒCƒeƒ€‚c\n";
-            work += "¬‰Ê•¨‚Ì”F‚Q\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“xF‚Q\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šã‚¢ã‚¤ãƒ†ãƒ ï¼¤\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼’\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦ï¼šï¼’\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚©‚©‚©‚©‚©\n";
-            work += "‘fŞ‚P‚Ì”F‚P‚P‚P\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‹ã‹ã‹ã‹ã‹\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼‘ï¼‘\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚«‚«‚«‚«‚«\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚Q‚Q\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåããããã\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼’ï¼’\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("ƒAƒCƒeƒ€‚c", work);
+            menu.SetOutputInfo("ã‚¢ã‚¤ãƒ†ãƒ ï¼¤", work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("ƒAƒCƒeƒ€‚c", "item1.png", sprite2);
+            menu.SetOutputImage("ã‚¢ã‚¤ãƒ†ãƒ ï¼¤", "item1.png", sprite2);
         }
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OFƒAƒCƒeƒ€‚d\n";
-            work += "¬‰Ê•¨‚Ì”F‚Q\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“xF‚Q\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šã‚¢ã‚¤ãƒ†ãƒ ï¼¥\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼’\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦ï¼šï¼’\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚©‚©‚©‚©‚©\n";
-            work += "‘fŞ‚P‚Ì”F‚P‚P‚P\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‹ã‹ã‹ã‹ã‹\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼‘ï¼‘\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚«‚«‚«‚«‚«\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚Q‚Q\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåããããã\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼’ï¼’\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("ƒAƒCƒeƒ€‚d", work);
+            menu.SetOutputInfo("ã‚¢ã‚¤ãƒ†ãƒ ï¼¥", work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("ƒAƒCƒeƒ€‚d", "item1.png", sprite2);
+            menu.SetOutputImage("ã‚¢ã‚¤ãƒ†ãƒ ï¼¥", "item1.png", sprite2);
         }
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OFƒAƒCƒeƒ€‚e\n";
-            work += "¬‰Ê•¨‚Ì”F‚Q\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“xF‚Q\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šã‚¢ã‚¤ãƒ†ãƒ ï¼¦\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼’\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦ï¼šï¼’\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚©‚©‚©‚©‚©\n";
-            work += "‘fŞ‚P‚Ì”F‚P‚P‚P\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‹ã‹ã‹ã‹ã‹\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼‘ï¼‘\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚«‚«‚«‚«‚«\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚Q‚Q\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåããããã\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼’ï¼’\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("ƒAƒCƒeƒ€‚e", work);
+            menu.SetOutputInfo("ã‚¢ã‚¤ãƒ†ãƒ ï¼¦", work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("ƒAƒCƒeƒ€‚e", "item1.png", sprite2);
+            menu.SetOutputImage("ã‚¢ã‚¤ãƒ†ãƒ ï¼¦", "item1.png", sprite2);
         }
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OFƒAƒCƒeƒ€‚f\n";
-            work += "¬‰Ê•¨‚Ì”F‚Q\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“xF‚Q\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šã‚¢ã‚¤ãƒ†ãƒ ï¼§\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼’\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦ï¼šï¼’\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚©‚©‚©‚©‚©\n";
-            work += "‘fŞ‚P‚Ì”F‚P‚P‚P\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‹ã‹ã‹ã‹ã‹\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼‘ï¼‘\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚«‚«‚«‚«‚«\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚Q‚Q\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåããããã\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼’ï¼’\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("ƒAƒCƒeƒ€‚f", work);
+            menu.SetOutputInfo("ã‚¢ã‚¤ãƒ†ãƒ ï¼§", work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("ƒAƒCƒeƒ€‚f", "item1.png", sprite2);
+            menu.SetOutputImage("ã‚¢ã‚¤ãƒ†ãƒ ï¼§", "item1.png", sprite2);
         }
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OFƒAƒCƒeƒ€‚g\n";
-            work += "¬‰Ê•¨‚Ì”F‚Q\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“xF‚Q\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šã‚¢ã‚¤ãƒ†ãƒ ï¼¨\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼’\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦ï¼šï¼’\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚©‚©‚©‚©‚©\n";
-            work += "‘fŞ‚P‚Ì”F‚P‚P‚P\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‹ã‹ã‹ã‹ã‹\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼‘ï¼‘\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚«‚«‚«‚«‚«\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚Q‚Q\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåããããã\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼’ï¼’\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("ƒAƒCƒeƒ€‚g", work);
+            menu.SetOutputInfo("ã‚¢ã‚¤ãƒ†ãƒ ï¼¨", work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("ƒAƒCƒeƒ€‚g", "item1.png", sprite2);
+            menu.SetOutputImage("ã‚¢ã‚¤ãƒ†ãƒ ï¼¨", "item1.png", sprite2);
         }
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OFƒAƒCƒeƒ€‚h\n";
-            work += "¬‰Ê•¨‚Ì”F‚Q\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“xF‚Q\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šã‚¢ã‚¤ãƒ†ãƒ ï¼©\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼’\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦ï¼šï¼’\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚©‚©‚©‚©‚©\n";
-            work += "‘fŞ‚P‚Ì”F‚P‚P‚P\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‹ã‹ã‹ã‹ã‹\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼‘ï¼‘\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚«‚«‚«‚«‚«\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚Q‚Q\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåããããã\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼’ï¼’\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("ƒAƒCƒeƒ€‚h", work);
+            menu.SetOutputInfo("ã‚¢ã‚¤ãƒ†ãƒ ï¼©", work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("ƒAƒCƒeƒ€‚h", "item1.png", sprite2);
+            menu.SetOutputImage("ã‚¢ã‚¤ãƒ†ãƒ ï¼©", "item1.png", sprite2);
         }
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OFƒAƒCƒeƒ€‚i\n";
-            work += "¬‰Ê•¨‚Ì”F‚Q\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“xF‚Q\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šã‚¢ã‚¤ãƒ†ãƒ ï¼ª\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼’\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦ï¼šï¼’\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚©‚©‚©‚©‚©\n";
-            work += "‘fŞ‚P‚Ì”F‚P‚P‚P\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‹ã‹ã‹ã‹ã‹\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼‘ï¼‘\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚«‚«‚«‚«‚«\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚Q‚Q\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåããããã\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼’ï¼’\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("ƒAƒCƒeƒ€‚i", work);
+            menu.SetOutputInfo("ã‚¢ã‚¤ãƒ†ãƒ ï¼ª", work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("ƒAƒCƒeƒ€‚i", "item1.png", sprite2);
+            menu.SetOutputImage("ã‚¢ã‚¤ãƒ†ãƒ ï¼ª", "item1.png", sprite2);
         }
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OFƒAƒCƒeƒ€‚j\n";
-            work += "¬‰Ê•¨‚Ì”F‚Q\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“xF‚Q\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šã‚¢ã‚¤ãƒ†ãƒ ï¼«\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼’\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦ï¼šï¼’\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚©‚©‚©‚©‚©\n";
-            work += "‘fŞ‚P‚Ì”F‚P‚P‚P\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‹ã‹ã‹ã‹ã‹\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼‘ï¼‘\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚«‚«‚«‚«‚«\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚Q‚Q\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåããããã\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼’ï¼’\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("ƒAƒCƒeƒ€‚j", work);
+            menu.SetOutputInfo("ã‚¢ã‚¤ãƒ†ãƒ ï¼«", work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("ƒAƒCƒeƒ€‚j", "item1.png", sprite2);
+            menu.SetOutputImage("ã‚¢ã‚¤ãƒ†ãƒ ï¼«", "item1.png", sprite2);
         }
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OFƒAƒCƒeƒ€‚k\n";
-            work += "¬‰Ê•¨‚Ì”F‚Q\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“xF‚Q\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šã‚¢ã‚¤ãƒ†ãƒ ï¼¬\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼’\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦ï¼šï¼’\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚©‚©‚©‚©‚©\n";
-            work += "‘fŞ‚P‚Ì”F‚P‚P‚P\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‹ã‹ã‹ã‹ã‹\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼‘ï¼‘\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚«‚«‚«‚«‚«\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚Q‚Q\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåããããã\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼’ï¼’\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("ƒAƒCƒeƒ€‚k", work);
+            menu.SetOutputInfo("ã‚¢ã‚¤ãƒ†ãƒ ï¼¬", work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("ƒAƒCƒeƒ€‚k", "item1.png", sprite2);
+            menu.SetOutputImage("ã‚¢ã‚¤ãƒ†ãƒ ï¼¬", "item1.png", sprite2);
         }
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OFƒAƒCƒeƒ€‚l\n";
-            work += "¬‰Ê•¨‚Ì”F‚Q\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“xF‚Q\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šã‚¢ã‚¤ãƒ†ãƒ ï¼­\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼’\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦ï¼šï¼’\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚©‚©‚©‚©‚©\n";
-            work += "‘fŞ‚P‚Ì”F‚P‚P‚P\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‹ã‹ã‹ã‹ã‹\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼‘ï¼‘\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚«‚«‚«‚«‚«\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚Q‚Q\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåããããã\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼’ï¼’\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("ƒAƒCƒeƒ€‚l", work);
+            menu.SetOutputInfo("ã‚¢ã‚¤ãƒ†ãƒ ï¼­", work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("ƒAƒCƒeƒ€‚l", "item1.png", sprite2);
+            menu.SetOutputImage("ã‚¢ã‚¤ãƒ†ãƒ ï¼­", "item1.png", sprite2);
         }
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OFƒAƒCƒeƒ€‚m\n";
-            work += "¬‰Ê•¨‚Ì”F‚Q\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“xF‚Q\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šã‚¢ã‚¤ãƒ†ãƒ ï¼®\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼’\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦ï¼šï¼’\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚©‚©‚©‚©‚©\n";
-            work += "‘fŞ‚P‚Ì”F‚P‚P‚P\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‹ã‹ã‹ã‹ã‹\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼‘ï¼‘\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚«‚«‚«‚«‚«\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚Q‚Q\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåããããã\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼’ï¼’\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("ƒAƒCƒeƒ€‚m", work);
+            menu.SetOutputInfo("ã‚¢ã‚¤ãƒ†ãƒ ï¼®", work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("ƒAƒCƒeƒ€‚m", "item1.png", sprite2);
+            menu.SetOutputImage("ã‚¢ã‚¤ãƒ†ãƒ ï¼®", "item1.png", sprite2);
         }
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OFƒAƒCƒeƒ€‚n\n";
-            work += "¬‰Ê•¨‚Ì”F‚Q\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“xF‚Q\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šã‚¢ã‚¤ãƒ†ãƒ ï¼¯\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼’\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦ï¼šï¼’\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚©‚©‚©‚©‚©\n";
-            work += "‘fŞ‚P‚Ì”F‚P‚P‚P\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‹ã‹ã‹ã‹ã‹\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼‘ï¼‘\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚«‚«‚«‚«‚«\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚Q‚Q\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåããããã\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼’ï¼’\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("ƒAƒCƒeƒ€‚n", work);
+            menu.SetOutputInfo("ã‚¢ã‚¤ãƒ†ãƒ ï¼¯", work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("ƒAƒCƒeƒ€‚n", "item1.png", sprite2);
+            menu.SetOutputImage("ã‚¢ã‚¤ãƒ†ãƒ ï¼¯", "item1.png", sprite2);
         }
         {
-            work = "¬‰Ê•¨‚Ì–¼‘OFƒAƒCƒeƒ€‚o\n";
-            work += "¬‰Ê•¨‚Ì”F‚Q\n";
-            work += "¬‰Ê•¨‚Ì‹­‰»“xF‚Q\n";
+            work = "æˆæœç‰©ã®åå‰ï¼šã‚¢ã‚¤ãƒ†ãƒ ï¼°\n";
+            work += "æˆæœç‰©ã®æ•°ï¼šï¼’\n";
+            work += "æˆæœç‰©ã®å¼·åŒ–åº¦ï¼šï¼’\n";
             work += "\n";
-            work += "‘fŞ‚P‚Ì–¼‘OF‘fŞ–¼‚©‚©‚©‚©‚©\n";
-            work += "‘fŞ‚P‚Ì”F‚P‚P‚P\n";
-            work += "‘fŞ‚P‚Ì‹­‰»“xF‚P\n";
+            work += "ç´ æï¼‘ã®åå‰ï¼šç´ æåã‹ã‹ã‹ã‹ã‹\n";
+            work += "ç´ æï¼‘ã®æ•°ï¼šï¼‘ï¼‘ï¼‘\n";
+            work += "ç´ æï¼‘ã®å¼·åŒ–åº¦ï¼šï¼‘\n";
             work += "\n";
-            work += "‘fŞ‚Q‚Ì–¼‘OF‘fŞ–¼‚«‚«‚«‚«‚«\n";
-            work += "‘fŞ‚Q‚Ì”F‚Q‚Q‚Q\n";
-            work += "‘fŞ‚Q‚Ì‹­‰»“xF‚Q\n";
+            work += "ç´ æï¼’ã®åå‰ï¼šç´ æåããããã\n";
+            work += "ç´ æï¼’ã®æ•°ï¼šï¼’ï¼’ï¼’\n";
+            work += "ç´ æï¼’ã®å¼·åŒ–åº¦ï¼šï¼’\n";
 
-            menu.SetOutputInfo("ƒAƒCƒeƒ€‚o", work);
+            menu.SetOutputInfo("ã‚¢ã‚¤ãƒ†ãƒ ï¼°", work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("ƒAƒCƒeƒ€‚o", "item1.png", sprite2);
+            menu.SetOutputImage("ã‚¢ã‚¤ãƒ†ãƒ ï¼°", "item1.png", sprite2);
         }
     }
     else
@@ -980,7 +980,7 @@ VOID Render()
     if (SUCCEEDED(g_pd3dDevice->BeginScene()))
     {
         char msg[128];
-        strcpy_s(msg, 128, "CƒL[‚ÅƒNƒ‰ƒtƒg‰æ–Ê‚ğ•\¦");
+        strcpy_s(msg, 128, "Cã‚­ãƒ¼ã§ã‚¯ãƒ©ãƒ•ãƒˆç”»é¢ã‚’è¡¨ç¤º");
         TextDraw(g_pFont, msg, 0, 0);
 
         pEffect->SetTechnique("BasicTec");
@@ -1027,7 +1027,7 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 bShowMenu = true;
             }
             break;
-        // ƒƒjƒ…[‚ğ•\¦‚µ‚Ä‚¢‚éÅ’†‚Éƒƒjƒ…[‚É•\¦‚³‚ê‚Ä‚¢‚é“à—e‚ğ•Ï‚¦‚é
+        // ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’è¡¨ç¤ºã—ã¦ã„ã‚‹æœ€ä¸­ã«ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«è¡¨ç¤ºã•ã‚Œã¦ã„ã‚‹å†…å®¹ã‚’å¤‰ãˆã‚‹
         case VK_F2:
         {
             // menu.SetItem(itemInfoList);
@@ -1047,11 +1047,11 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         case VK_RETURN:
         {
             std::string result = menu.Into();
-            if (result == "ƒ^ƒCƒgƒ‹")
+            if (result == "ã‚¿ã‚¤ãƒˆãƒ«")
             {
                 bShowMenu = false;
             }
-            else if (result == "Å‰‚©‚ç")
+            else if (result == "æœ€åˆã‹ã‚‰")
             {
                 bShowMenu = false;
             }
