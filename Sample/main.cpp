@@ -1,19 +1,20 @@
-﻿#pragma comment( lib, "d3d9.lib" )
+﻿#pragma comment( lib, "d3d9.lib")
 #if defined(DEBUG) || defined(_DEBUG)
-#pragma comment( lib, "d3dx9d.lib" )
+#pragma comment( lib, "d3dx9d.lib")
 #else
-#pragma comment( lib, "d3dx9.lib" )
+#pragma comment( lib, "d3dx9.lib")
 #endif
 
 #pragma comment (lib, "winmm.lib")
 
-#pragma comment( lib, "craftlib.lib" )
+#pragma comment( lib, "craftlib.lib")
 
 #include "..\craftlib\CraftLib.h"
 
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <string>
+#include <tchar.h>
 
 using namespace NSCraftLib;
 
@@ -48,7 +49,7 @@ public:
 
     }
 
-    void Load(const std::string& filepath) override
+    void Load(const std::wstring& filepath) override
     {
         LPD3DXSPRITE tempSprite { nullptr };
         if (FAILED(D3DXCreateSprite(m_pD3DDevice, &m_D3DSprite)))
@@ -111,7 +112,7 @@ public:
                                         OUT_TT_ONLY_PRECIS,
                                         ANTIALIASED_QUALITY,
                                         FF_DONTCARE,
-                                        "ＭＳ 明朝",
+                                        _T("ＭＳ 明朝"),
                                         &m_pFont);
         }
         else
@@ -126,12 +127,12 @@ public:
                                         OUT_TT_ONLY_PRECIS,
                                         CLEARTYPE_NATURAL_QUALITY,
                                         FF_DONTCARE,
-                                        "Courier New",
+                                        _T("Courier New"),
                                         &m_pFont);
         }
     }
 
-    virtual void DrawText_(const std::string& msg, const int x, const int y)
+    virtual void DrawText_(const std::wstring& msg, const int x, const int y)
     {
         RECT rect = { x, y, 0, 0 };
         m_pFont->DrawText(NULL, msg.c_str(), -1, &rect, DT_LEFT | DT_NOCLIP,
@@ -154,15 +155,15 @@ class SoundEffect : public ISoundEffect
 {
     virtual void PlayMove() override
     {
-        PlaySound("cursor_move.wav", NULL, SND_FILENAME | SND_ASYNC);
+        PlaySound(_T("cursor_move.wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
     virtual void PlayClick() override
     {
-        PlaySound("cursor_confirm.wav", NULL, SND_FILENAME | SND_ASYNC);
+        PlaySound(_T("cursor_confirm.wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
     virtual void PlayBack() override
     {
-        PlaySound("cursor_cancel.wav", NULL, SND_FILENAME | SND_ASYNC);
+        PlaySound(_T("cursor_cancel.wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
     virtual void Init() override
     {
@@ -184,7 +185,7 @@ bool bShowMenu = true;
 
 CraftLib menu;
 
-void TextDraw(LPD3DXFONT pFont, char* text, int X, int Y)
+void TextDraw(LPD3DXFONT pFont, wchar_t* text, int X, int Y)
 {
     RECT rect = { X,Y,0,0 };
     pFont->DrawText(NULL, text, -1, &rect, DT_LEFT | DT_NOCLIP, D3DCOLOR_ARGB(255, 0, 0, 0));
@@ -231,7 +232,7 @@ HRESULT InitD3D(HWND hWnd)
         OUT_TT_ONLY_PRECIS,
         ANTIALIASED_QUALITY,
         FF_DONTCARE,
-        "ＭＳ ゴシック",
+        _T("ＭＳ ゴシック"),
         &g_pFont);
     if FAILED(hr)
     {
@@ -240,11 +241,11 @@ HRESULT InitD3D(HWND hWnd)
 
     LPD3DXBUFFER pD3DXMtrlBuffer = NULL;
 
-    if (FAILED(D3DXLoadMeshFromX("cube.x", D3DXMESH_SYSTEMMEM,
+    if (FAILED(D3DXLoadMeshFromX(_T("cube.x"), D3DXMESH_SYSTEMMEM,
         g_pd3dDevice, NULL, &pD3DXMtrlBuffer, NULL,
         &dwNumMaterials, &pMesh)))
     {
-        MessageBox(NULL, "Xファイルの読み込みに失敗しました", NULL, MB_OK);
+        MessageBox(NULL, _T("Xファイルの読み込みに失敗しました"), NULL, MB_OK);
         return E_FAIL;
     }
     d3dxMaterials = (D3DXMATERIAL*)pD3DXMtrlBuffer->GetBufferPointer();
@@ -253,17 +254,20 @@ HRESULT InitD3D(HWND hWnd)
 
     for (DWORD i = 0; i < dwNumMaterials; i++)
     {
+        int len = MultiByteToWideChar(CP_ACP, 0, d3dxMaterials[i].pTextureFilename, -1, NULL, 0);
+        std::wstring texFilename(len, 0);
+        MultiByteToWideChar(CP_ACP, 0, d3dxMaterials[i].pTextureFilename, -1, &texFilename[0], len);
+
         pMaterials[i] = d3dxMaterials[i].MatD3D;
         pMaterials[i].Ambient = pMaterials[i].Diffuse;
         pTextures[i] = NULL;
-        if (d3dxMaterials[i].pTextureFilename != NULL &&
-            lstrlen(d3dxMaterials[i].pTextureFilename) > 0)
+        if (d3dxMaterials[i].pTextureFilename != NULL && len > 0)
         {
             if (FAILED(D3DXCreateTextureFromFile(g_pd3dDevice,
-                d3dxMaterials[i].pTextureFilename,
-                &pTextures[i])))
+                                                 texFilename.c_str(),
+                                                 &pTextures[i])))
             {
-                MessageBox(NULL, "テクスチャの読み込みに失敗しました", NULL, MB_OK);
+                MessageBox(NULL, _T("テクスチャの読み込みに失敗しました"), NULL, MB_OK);
             }
         }
     }
@@ -271,7 +275,7 @@ HRESULT InitD3D(HWND hWnd)
 
     D3DXCreateEffectFromFile(
         g_pd3dDevice,
-        "simple.fx",
+        _T("simple.fx"),
         NULL,
         NULL,
         D3DXSHADER_DEBUG,
@@ -281,16 +285,16 @@ HRESULT InitD3D(HWND hWnd)
     );
 
     Sprite* sprCursor = new Sprite(g_pd3dDevice);
-    sprCursor->Load("cursor.png");
+    sprCursor->Load(_T("cursor.png"));
 
     Sprite* sprBackground = new Sprite(g_pd3dDevice);
-    sprBackground->Load("background.png");
+    sprBackground->Load(_T("background.png"));
 
     Sprite* sprPanelLeft = new Sprite(g_pd3dDevice);
-    sprPanelLeft->Load("panelLeft.png");
+    sprPanelLeft->Load(_T("panelLeft.png"));
 
     Sprite* sprPanelTop = new Sprite(g_pd3dDevice);
-    sprPanelTop->Load("craftPanel.png");
+    sprPanelTop->Load(_T("craftPanel.png"));
 
     IFont* pFont = new Font(g_pd3dDevice);
 
@@ -301,646 +305,646 @@ HRESULT InitD3D(HWND hWnd)
 
     if (!bEnglish)
     {
-        std::vector<std::string> vs;
+        std::vector<std::wstring> vs;
 
-        vs.push_back("アイテムＡＡＡ");
-        vs.push_back("武器ＢＢＢ");
-        vs.push_back("アイテムＣ");
-        vs.push_back("アイテムＤ");
-        vs.push_back("アイテムＥ");
-        vs.push_back("アイテムＦ");
-        vs.push_back("アイテムＧ");
-        vs.push_back("アイテムＨ");
-        vs.push_back("アイテムＩ");
-        vs.push_back("アイテムＪ");
-        vs.push_back("アイテムＫ");
-        vs.push_back("アイテムＬ");
-        vs.push_back("アイテムＭ");
-        vs.push_back("アイテムＮ");
-        vs.push_back("アイテムＯ");
-        vs.push_back("アイテムＰ");
+        vs.push_back(_T("アイテムＡＡＡ"));
+        vs.push_back(_T("武器ＢＢＢ"));
+        vs.push_back(_T("アイテムＣ"));
+        vs.push_back(_T("アイテムＤ"));
+        vs.push_back(_T("アイテムＥ"));
+        vs.push_back(_T("アイテムＦ"));
+        vs.push_back(_T("アイテムＧ"));
+        vs.push_back(_T("アイテムＨ"));
+        vs.push_back(_T("アイテムＩ"));
+        vs.push_back(_T("アイテムＪ"));
+        vs.push_back(_T("アイテムＫ"));
+        vs.push_back(_T("アイテムＬ"));
+        vs.push_back(_T("アイテムＭ"));
+        vs.push_back(_T("アイテムＮ"));
+        vs.push_back(_T("アイテムＯ"));
+        vs.push_back(_T("アイテムＰ"));
         menu.SetOutputList(vs);
 
-        menu.SetCraftingItem("アイテムＺＺＺＺＺ", 24);
+        menu.SetCraftingItem(_T("アイテムＺＺＺＺＺ"), 24);
 
         vs.clear();
-        vs.push_back("アイテム１");
-        vs.push_back("アイテム２");
-        vs.push_back("アイテム３");
-        vs.push_back("アイテム４");
+        vs.push_back(_T("アイテム１"));
+        vs.push_back(_T("アイテム２"));
+        vs.push_back(_T("アイテム３"));
+        vs.push_back(_T("アイテム４"));
         menu.SetCraftQue(vs);
 
-        std::string work;
+        std::wstring work;
 
         {
-            work = "成果物の名前：アイテムＡＡＡ\n";
-            work += "成果物の数：１\n";
-            work += "成果物の強化度\n";
-            work += "\n";
-            work += "素材１の名前：素材名あああ\n";
-            work += "素材１の数：１０\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名いいい\n";
-            work += "素材２の数：２０\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：アイテムＡＡＡ\n");
+            work += _T("成果物の数：１\n");
+            work += _T("成果物の強化度\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名あああ\n");
+            work += _T("素材１の数：１０\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名いいい\n");
+            work += _T("素材２の数：２０\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("アイテムＡＡＡ", work);
+            menu.SetOutputInfo(_T("アイテムＡＡＡ"), work);
 
             ISprite* sprite1 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("アイテムＡＡＡ", "item1.png", sprite1);
+            menu.SetOutputImage(_T("アイテムＡＡＡ"), _T("item1.png"), sprite1);
         }
         {
-            work = "成果物の名前：武器ＢＢＢ\n";
-            work += "成果物の数：２\n";
-            work += "成果物の強化度：２\n";
-            work += "\n";
-            work += "素材１の名前：素材名かかかかか\n";
-            work += "素材１の数：１１１\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名ききききき\n";
-            work += "素材２の数：２２２\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：武器ＢＢＢ\n");
+            work += _T("成果物の数：２\n");
+            work += _T("成果物の強化度：２\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名かかかかか\n");
+            work += _T("素材１の数：１１１\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名ききききき\n");
+            work += _T("素材２の数：２２２\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("武器ＢＢＢ", work);
+            menu.SetOutputInfo(_T("武器ＢＢＢ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("武器ＢＢＢ", "item2.png", sprite2);
+            menu.SetOutputImage(_T("武器ＢＢＢ"), _T("item2.png"), sprite2);
         }
         {
-            work = "成果物の名前：アイテムＣ\n";
-            work += "成果物の数：２\n";
-            work += "成果物の強化度：２\n";
-            work += "\n";
-            work += "素材１の名前：素材名かかかかか\n";
-            work += "素材１の数：１１１\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名ききききき\n";
-            work += "素材２の数：２２２\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：アイテムＣ\n");
+            work += _T("成果物の数：２\n");
+            work += _T("成果物の強化度：２\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名かかかかか\n");
+            work += _T("素材１の数：１１１\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名ききききき\n");
+            work += _T("素材２の数：２２２\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("アイテムＣ", work);
+            menu.SetOutputInfo(_T("アイテムＣ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("アイテムＣ", "item3.png", sprite2);
+            menu.SetOutputImage(_T("アイテムＣ"), _T("item3.png"), sprite2);
         }
         {
-            work = "成果物の名前：アイテムＤ\n";
-            work += "成果物の数：２\n";
-            work += "成果物の強化度：２\n";
-            work += "\n";
-            work += "素材１の名前：素材名かかかかか\n";
-            work += "素材１の数：１１１\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名ききききき\n";
-            work += "素材２の数：２２２\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：アイテムＤ\n");
+            work += _T("成果物の数：２\n");
+            work += _T("成果物の強化度：２\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名かかかかか\n");
+            work += _T("素材１の数：１１１\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名ききききき\n");
+            work += _T("素材２の数：２２２\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("アイテムＤ", work);
+            menu.SetOutputInfo(_T("アイテムＤ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("アイテムＤ", "item1.png", sprite2);
+            menu.SetOutputImage(_T("アイテムＤ"), _T("item1.png"), sprite2);
         }
         {
-            work = "成果物の名前：アイテムＥ\n";
-            work += "成果物の数：２\n";
-            work += "成果物の強化度：２\n";
-            work += "\n";
-            work += "素材１の名前：素材名かかかかか\n";
-            work += "素材１の数：１１１\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名ききききき\n";
-            work += "素材２の数：２２２\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：アイテムＥ\n");
+            work += _T("成果物の数：２\n");
+            work += _T("成果物の強化度：２\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名かかかかか\n");
+            work += _T("素材１の数：１１１\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名ききききき\n");
+            work += _T("素材２の数：２２２\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("アイテムＥ", work);
+            menu.SetOutputInfo(_T("アイテムＥ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("アイテムＥ", "item1.png", sprite2);
+            menu.SetOutputImage(_T("アイテムＥ"), _T("item1.png"), sprite2);
         }
         {
-            work = "成果物の名前：アイテムＦ\n";
-            work += "成果物の数：２\n";
-            work += "成果物の強化度：２\n";
-            work += "\n";
-            work += "素材１の名前：素材名かかかかか\n";
-            work += "素材１の数：１１１\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名ききききき\n";
-            work += "素材２の数：２２２\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：アイテムＦ\n");
+            work += _T("成果物の数：２\n");
+            work += _T("成果物の強化度：２\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名かかかかか\n");
+            work += _T("素材１の数：１１１\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名ききききき\n");
+            work += _T("素材２の数：２２２\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("アイテムＦ", work);
+            menu.SetOutputInfo(_T("アイテムＦ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("アイテムＦ", "item1.png", sprite2);
+            menu.SetOutputImage(_T("アイテムＦ"), _T("item1.png"), sprite2);
         }
         {
-            work = "成果物の名前：アイテムＧ\n";
-            work += "成果物の数：２\n";
-            work += "成果物の強化度：２\n";
-            work += "\n";
-            work += "素材１の名前：素材名かかかかか\n";
-            work += "素材１の数：１１１\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名ききききき\n";
-            work += "素材２の数：２２２\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：アイテムＧ\n");
+            work += _T("成果物の数：２\n");
+            work += _T("成果物の強化度：２\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名かかかかか\n");
+            work += _T("素材１の数：１１１\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名ききききき\n");
+            work += _T("素材２の数：２２２\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("アイテムＧ", work);
+            menu.SetOutputInfo(_T("アイテムＧ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("アイテムＧ", "item1.png", sprite2);
+            menu.SetOutputImage(_T("アイテムＧ"), _T("item1.png"), sprite2);
         }
         {
-            work = "成果物の名前：アイテムＨ\n";
-            work += "成果物の数：２\n";
-            work += "成果物の強化度：２\n";
-            work += "\n";
-            work += "素材１の名前：素材名かかかかか\n";
-            work += "素材１の数：１１１\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名ききききき\n";
-            work += "素材２の数：２２２\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：アイテムＨ\n");
+            work += _T("成果物の数：２\n");
+            work += _T("成果物の強化度：２\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名かかかかか\n");
+            work += _T("素材１の数：１１１\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名ききききき\n");
+            work += _T("素材２の数：２２２\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("アイテムＨ", work);
+            menu.SetOutputInfo(_T("アイテムＨ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("アイテムＨ", "item1.png", sprite2);
+            menu.SetOutputImage(_T("アイテムＨ"), _T("item1.png"), sprite2);
         }
         {
-            work = "成果物の名前：アイテムＩ\n";
-            work += "成果物の数：２\n";
-            work += "成果物の強化度：２\n";
-            work += "\n";
-            work += "素材１の名前：素材名かかかかか\n";
-            work += "素材１の数：１１１\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名ききききき\n";
-            work += "素材２の数：２２２\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：アイテムＩ\n");
+            work += _T("成果物の数：２\n");
+            work += _T("成果物の強化度：２\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名かかかかか\n");
+            work += _T("素材１の数：１１１\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名ききききき\n");
+            work += _T("素材２の数：２２２\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("アイテムＩ", work);
+            menu.SetOutputInfo(_T("アイテムＩ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("アイテムＩ", "item1.png", sprite2);
+            menu.SetOutputImage(_T("アイテムＩ"), _T("item1.png"), sprite2);
         }
         {
-            work = "成果物の名前：アイテムＪ\n";
-            work += "成果物の数：２\n";
-            work += "成果物の強化度：２\n";
-            work += "\n";
-            work += "素材１の名前：素材名かかかかか\n";
-            work += "素材１の数：１１１\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名ききききき\n";
-            work += "素材２の数：２２２\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：アイテムＪ\n");
+            work += _T("成果物の数：２\n");
+            work += _T("成果物の強化度：２\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名かかかかか\n");
+            work += _T("素材１の数：１１１\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名ききききき\n");
+            work += _T("素材２の数：２２２\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("アイテムＪ", work);
+            menu.SetOutputInfo(_T("アイテムＪ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("アイテムＪ", "item1.png", sprite2);
+            menu.SetOutputImage(_T("アイテムＪ"), _T("item1.png"), sprite2);
         }
         {
-            work = "成果物の名前：アイテムＫ\n";
-            work += "成果物の数：２\n";
-            work += "成果物の強化度：２\n";
-            work += "\n";
-            work += "素材１の名前：素材名かかかかか\n";
-            work += "素材１の数：１１１\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名ききききき\n";
-            work += "素材２の数：２２２\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：アイテムＫ\n");
+            work += _T("成果物の数：２\n");
+            work += _T("成果物の強化度：２\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名かかかかか\n");
+            work += _T("素材１の数：１１１\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名ききききき\n");
+            work += _T("素材２の数：２２２\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("アイテムＫ", work);
+            menu.SetOutputInfo(_T("アイテムＫ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("アイテムＫ", "item1.png", sprite2);
+            menu.SetOutputImage(_T("アイテムＫ"), _T("item1.png"), sprite2);
         }
         {
-            work = "成果物の名前：アイテムＬ\n";
-            work += "成果物の数：２\n";
-            work += "成果物の強化度：２\n";
-            work += "\n";
-            work += "素材１の名前：素材名かかかかか\n";
-            work += "素材１の数：１１１\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名ききききき\n";
-            work += "素材２の数：２２２\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：アイテムＬ\n");
+            work += _T("成果物の数：２\n");
+            work += _T("成果物の強化度：２\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名かかかかか\n");
+            work += _T("素材１の数：１１１\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名ききききき\n");
+            work += _T("素材２の数：２２２\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("アイテムＬ", work);
+            menu.SetOutputInfo(_T("アイテムＬ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("アイテムＬ", "item1.png", sprite2);
+            menu.SetOutputImage(_T("アイテムＬ"), _T("item1.png"), sprite2);
         }
         {
-            work = "成果物の名前：アイテムＭ\n";
-            work += "成果物の数：２\n";
-            work += "成果物の強化度：２\n";
-            work += "\n";
-            work += "素材１の名前：素材名かかかかか\n";
-            work += "素材１の数：１１１\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名ききききき\n";
-            work += "素材２の数：２２２\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：アイテムＭ\n");
+            work += _T("成果物の数：２\n");
+            work += _T("成果物の強化度：２\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名かかかかか\n");
+            work += _T("素材１の数：１１１\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名ききききき\n");
+            work += _T("素材２の数：２２２\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("アイテムＭ", work);
+            menu.SetOutputInfo(_T("アイテムＭ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("アイテムＭ", "item1.png", sprite2);
+            menu.SetOutputImage(_T("アイテムＭ"), _T("item1.png"), sprite2);
         }
         {
-            work = "成果物の名前：アイテムＮ\n";
-            work += "成果物の数：２\n";
-            work += "成果物の強化度：２\n";
-            work += "\n";
-            work += "素材１の名前：素材名かかかかか\n";
-            work += "素材１の数：１１１\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名ききききき\n";
-            work += "素材２の数：２２２\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：アイテムＮ\n");
+            work += _T("成果物の数：２\n");
+            work += _T("成果物の強化度：２\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名かかかかか\n");
+            work += _T("素材１の数：１１１\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名ききききき\n");
+            work += _T("素材２の数：２２２\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("アイテムＮ", work);
+            menu.SetOutputInfo(_T("アイテムＮ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("アイテムＮ", "item1.png", sprite2);
+            menu.SetOutputImage(_T("アイテムＮ"), _T("item1.png"), sprite2);
         }
         {
-            work = "成果物の名前：アイテムＯ\n";
-            work += "成果物の数：２\n";
-            work += "成果物の強化度：２\n";
-            work += "\n";
-            work += "素材１の名前：素材名かかかかか\n";
-            work += "素材１の数：１１１\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名ききききき\n";
-            work += "素材２の数：２２２\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：アイテムＯ\n");
+            work += _T("成果物の数：２\n");
+            work += _T("成果物の強化度：２\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名かかかかか\n");
+            work += _T("素材１の数：１１１\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名ききききき\n");
+            work += _T("素材２の数：２２２\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("アイテムＯ", work);
+            menu.SetOutputInfo(_T("アイテムＯ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("アイテムＯ", "item1.png", sprite2);
+            menu.SetOutputImage(_T("アイテムＯ"), _T("item1.png"), sprite2);
         }
         {
-            work = "成果物の名前：アイテムＰ\n";
-            work += "成果物の数：２\n";
-            work += "成果物の強化度：２\n";
-            work += "\n";
-            work += "素材１の名前：素材名かかかかか\n";
-            work += "素材１の数：１１１\n";
-            work += "素材１の強化度：１\n";
-            work += "\n";
-            work += "素材２の名前：素材名ききききき\n";
-            work += "素材２の数：２２２\n";
-            work += "素材２の強化度：２\n";
+            work = _T("成果物の名前：アイテムＰ\n");
+            work += _T("成果物の数：２\n");
+            work += _T("成果物の強化度：２\n");
+            work += _T("\n");
+            work += _T("素材１の名前：素材名かかかかか\n");
+            work += _T("素材１の数：１１１\n");
+            work += _T("素材１の強化度：１\n");
+            work += _T("\n");
+            work += _T("素材２の名前：素材名ききききき\n");
+            work += _T("素材２の数：２２２\n");
+            work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo("アイテムＰ", work);
+            menu.SetOutputInfo(_T("アイテムＰ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("アイテムＰ", "item1.png", sprite2);
+            menu.SetOutputImage(_T("アイテムＰ"), _T("item1.png"), sprite2);
         }
     }
     else
     {
-        std::vector<std::string> vs;
+        std::vector<std::wstring> vs;
 
-        vs.push_back("item_AAA");
-        vs.push_back("item_BBB");
-        vs.push_back("item_CCC");
-        vs.push_back("item_DDD");
-        vs.push_back("item_EEE");
-        vs.push_back("item_FFF");
-        vs.push_back("item_GGG");
-        vs.push_back("item_HHH");
-        vs.push_back("item_III");
-        vs.push_back("item_JJJ");
-        vs.push_back("item_KKK");
-        vs.push_back("item_LLL");
-        vs.push_back("item_MMM");
-        vs.push_back("item_NNN");
-        vs.push_back("item_OOO");
-        vs.push_back("item_PPP");
+        vs.push_back(_T("item_AAA"));
+        vs.push_back(_T("item_BBB"));
+        vs.push_back(_T("item_CCC"));
+        vs.push_back(_T("item_DDD"));
+        vs.push_back(_T("item_EEE"));
+        vs.push_back(_T("item_FFF"));
+        vs.push_back(_T("item_GGG"));
+        vs.push_back(_T("item_HHH"));
+        vs.push_back(_T("item_III"));
+        vs.push_back(_T("item_JJJ"));
+        vs.push_back(_T("item_KKK"));
+        vs.push_back(_T("item_LLL"));
+        vs.push_back(_T("item_MMM"));
+        vs.push_back(_T("item_NNN"));
+        vs.push_back(_T("item_OOO"));
+        vs.push_back(_T("item_PPP"));
         menu.SetOutputList(vs);
 
-        menu.SetCraftingItem("item_zzzzz", 24);
+        menu.SetCraftingItem(_T("item_zzzzz"), 24);
 
         vs.clear();
-        vs.push_back("item_1");
-        vs.push_back("item_2");
-        vs.push_back("item_3");
-        vs.push_back("item_4");
+        vs.push_back(_T("item_1"));
+        vs.push_back(_T("item_2"));
+        vs.push_back(_T("item_3"));
+        vs.push_back(_T("item_4"));
         menu.SetCraftQue(vs);
 
-        std::string work;
+        std::wstring work;
 
         {
-            work = "Output name : item_AAA\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_AAA\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_AAA", work);
+            menu.SetOutputInfo(_T("item_AAA"), work);
 
             ISprite* sprite1 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_AAA", "item1.png", sprite1);
+            menu.SetOutputImage(_T("item_AAA"), _T("item1.png"), sprite1);
         }
         {
-            work = "Output name : item_BBB\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_BBB\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_BBB", work);
+            menu.SetOutputInfo(_T("item_BBB"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_BBB", "item2.png", sprite2);
+            menu.SetOutputImage(_T("item_BBB"), _T("item2.png"), sprite2);
         }
         {
-            work = "Output name : item_CCC\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_CCC\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_CCC", work);
+            menu.SetOutputInfo(_T("item_CCC"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_CCC", "item2.png", sprite2);
+            menu.SetOutputImage(_T("item_CCC"), _T("item2.png"), sprite2);
         }
         {
-            work = "Output name : item_DDD\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_DDD\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_DDD", work);
+            menu.SetOutputInfo(_T("item_DDD"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_DDD", "item2.png", sprite2);
+            menu.SetOutputImage(_T("item_DDD"), _T("item2.png"), sprite2);
         }
         {
-            work = "Output name : item_EEE\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_EEE\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_EEE", work);
+            menu.SetOutputInfo(_T("item_EEE"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_EEE", "item2.png", sprite2);
+            menu.SetOutputImage(_T("item_EEE"), _T("item2.png"), sprite2);
         }
         {
-            work = "Output name : item_FFF\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_FFF\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_FFF", work);
+            menu.SetOutputInfo(_T("item_FFF"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_FFF", "item2.png", sprite2);
+            menu.SetOutputImage(_T("item_FFF"), _T("item2.png"), sprite2);
         }
         {
-            work = "Output name : item_GGG\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_GGG\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_GGG", work);
+            menu.SetOutputInfo(_T("item_GGG"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_GGG", "item2.png", sprite2);
+            menu.SetOutputImage(_T("item_GGG"), _T("item2.png"), sprite2);
         }
         {
-            work = "Output name : item_HHH\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_HHH\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_HHH", work);
+            menu.SetOutputInfo(_T("item_HHH"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_HHH", "item2.png", sprite2);
+            menu.SetOutputImage(_T("item_HHH"), _T("item2.png"), sprite2);
         }
         {
-            work = "Output name : item_III\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_III\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_III", work);
+            menu.SetOutputInfo(_T("item_III"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_III", "item2.png", sprite2);
+            menu.SetOutputImage(_T("item_III"), _T("item2.png"), sprite2);
         }
         {
-            work = "Output name : item_JJJ\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_JJJ\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_JJJ", work);
+            menu.SetOutputInfo(_T("item_JJJ"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_JJJ", "item2.png", sprite2);
+            menu.SetOutputImage(_T("item_JJJ"), _T("item2.png"), sprite2);
         }
         {
-            work = "Output name : item_KKK\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_KKK\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_KKK", work);
+            menu.SetOutputInfo(_T("item_KKK"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_KKK", "item2.png", sprite2);
+            menu.SetOutputImage(_T("item_KKK"), _T("item2.png"), sprite2);
         }
         {
-            work = "Output name : item_LLL\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_LLL\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_LLL", work);
+            menu.SetOutputInfo(_T("item_LLL"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_LLL", "item2.png", sprite2);
+            menu.SetOutputImage(_T("item_LLL"), _T("item2.png"), sprite2);
         }
         {
-            work = "Output name : item_MMM\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_MMM\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_MMM", work);
+            menu.SetOutputInfo(_T("item_MMM"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_MMM", "item2.png", sprite2);
+            menu.SetOutputImage(_T("item_MMM"), _T("item2.png"), sprite2);
         }
         {
-            work = "Output name : item_NNN\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_NNN\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_NNN", work);
+            menu.SetOutputInfo(_T("item_NNN"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_NNN", "item2.png", sprite2);
+            menu.SetOutputImage(_T("item_NNN"), _T("item2.png"), sprite2);
         }
         {
-            work = "Output name : item_OOO\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_OOO\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_OOO", work);
+            menu.SetOutputInfo(_T("item_OOO"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_OOO", "item2.png", sprite2);
+            menu.SetOutputImage(_T("item_OOO"), _T("item2.png"), sprite2);
         }
         {
-            work = "Output name : item_PPP\n";
-            work += "Output num : 1\n";
-            work += "Output level\n";
-            work += "\n";
-            work += "Material 1 name : item_BBB\n";
-            work += "Material 1 num : 10\n";
-            work += "Material 1 level : 1\n";
-            work += "\n";
-            work += "Material 2 name : item_CCC\n";
-            work += "Material 2 num : 20\n";
-            work += "Material 2 level : 2\n";
+            work = _T("Output name : item_PPP\n");
+            work += _T("Output num : 1\n");
+            work += _T("Output level\n");
+            work += _T("\n");
+            work += _T("Material 1 name : item_BBB\n");
+            work += _T("Material 1 num : 10\n");
+            work += _T("Material 1 level : 1\n");
+            work += _T("\n");
+            work += _T("Material 2 name : item_CCC\n");
+            work += _T("Material 2 num : 20\n");
+            work += _T("Material 2 level : 2\n");
 
-            menu.SetOutputInfo("item_PPP", work);
+            menu.SetOutputInfo(_T("item_PPP"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage("item_PPP", "item2.png", sprite2);
+            menu.SetOutputImage(_T("item_PPP"), _T("item2.png"), sprite2);
         }
     }
 
@@ -979,8 +983,8 @@ VOID Render()
 
     if (SUCCEEDED(g_pd3dDevice->BeginScene()))
     {
-        char msg[128];
-        strcpy_s(msg, 128, "Cキーでクラフト画面を表示");
+        wchar_t msg[128];
+        wcscpy_s(msg, 128, _T("Cキーでクラフト画面を表示"));
         TextDraw(g_pFont, msg, 0, 0);
 
         pEffect->SetTechnique("BasicTec");
@@ -1046,12 +1050,12 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
             break;
         case VK_RETURN:
         {
-            std::string result = menu.Into();
-            if (result == "タイトル")
+            std::wstring result = menu.Into();
+            if (result == _T("タイトル"))
             {
                 bShowMenu = false;
             }
-            else if (result == "最初から")
+            else if (result == _T("最初から"))
             {
                 bShowMenu = false;
             }
@@ -1059,9 +1063,9 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
         case VK_BACK:
         {
-            std::string result;
+            std::wstring result;
             result = menu.Back();
-            if (result == "EXIT")
+            if (result == _T("EXIT"))
             {
                 bShowMenu = false;
             }
@@ -1086,9 +1090,9 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     }
     case WM_RBUTTONDOWN:
     {
-        std::string result;
+        std::wstring result;
         result = menu.Back();
-        if (result == "EXIT")
+        if (result == _T("EXIT"))
         {
             bShowMenu = false;
         }
@@ -1116,7 +1120,7 @@ INT WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE, _In_ LPWSTR, _In_ 
 {
     WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0L, 0L,
                       GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
-                      "Window1", NULL };
+                      _T("Window1"), NULL };
     RegisterClassEx(&wc);
 
     RECT rect;
@@ -1127,7 +1131,7 @@ INT WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE, _In_ LPWSTR, _In_ 
     rect.top = 0;
     rect.left = 0;
 
-    HWND hWnd = CreateWindow("Window1", "Hello DirectX9 World !!",
+    HWND hWnd = CreateWindow(_T("Window1"), _T("Hello DirectX9 World !!"),
         WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right, rect.bottom,
         NULL, NULL, wc.hInstance, NULL);
 
@@ -1144,6 +1148,6 @@ INT WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE, _In_ LPWSTR, _In_ 
         }
     }
 
-    UnregisterClass("Window1", wc.hInstance);
+    UnregisterClass(_T("Window1"), wc.hInstance);
     return 0;
 }

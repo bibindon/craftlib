@@ -9,14 +9,14 @@ class ISprite
 {
 public:
     virtual void DrawImage(const int x, const int y, const int transparency = 255) = 0;
-    virtual void Load(const std::string& filepath) = 0;
+    virtual void Load(const std::wstring& filepath) = 0;
     virtual ~ISprite() {};
 };
 
 class IFont
 {
 public:
-    virtual void DrawText_(const std::string& msg, const int x, const int y) = 0;
+    virtual void DrawText_(const std::wstring& msg, const int x, const int y) = 0;
     virtual void Init(const bool bEnglish) = 0;
     virtual ~IFont() {};
 };
@@ -45,24 +45,24 @@ public:
 
     void Finalize();
 
-    void SetOutputList(const std::vector<std::string>& arg);
-    void SetOutputInfo(const std::string& key, const std::string& value);
-    void SetOutputImage(const std::string& key,
-                        const std::string& imagePath,
+    void SetOutputList(const std::vector<std::wstring>& arg);
+    void SetOutputInfo(const std::wstring& key, const std::wstring& value);
+    void SetOutputImage(const std::wstring& key,
+                        const std::wstring& imagePath,
                         ISprite* sprite);
-    void SetCraftingItem(const std::string& name, const int progress);
-    void SetCraftQue(const std::vector<std::string>& craftQue);
+    void SetCraftingItem(const std::wstring& name, const int progress);
+    void SetCraftQue(const std::vector<std::wstring>& craftQue);
 
-    std::string Up();
-    std::string Down();
-    std::string Right();
-    std::string Left();
-    std::string Into();
-    std::string Back();
-    std::string Next();
-    std::string Previous();
+    std::wstring Up();
+    std::wstring Down();
+    std::wstring Right();
+    std::wstring Left();
+    std::wstring Into();
+    std::wstring Back();
+    std::wstring Next();
+    std::wstring Previous();
     void CursorOn(const int x, const int y);
-    std::string Click(const int x, const int y);
+    std::wstring Click(const int x, const int y);
     void Draw();
     
 private:
@@ -81,9 +81,9 @@ private:
     ISoundEffect* m_SE;
     eFocus m_eFocus = eFocus::OUTPUT;
 
-    std::vector<std::string> m_outputList;
-    std::unordered_map<std::string, std::string> m_outputInfoMap;
-    std::unordered_map<std::string, ISprite*> m_imageMap;
+    std::vector<std::wstring> m_outputList;
+    std::unordered_map<std::wstring, std::wstring> m_outputInfoMap;
+    std::unordered_map<std::wstring, ISprite*> m_imageMap;
 
     const int LEFT_PANEL_PADDINGX = 50;
     const int LEFT_PANEL_PADDINGY = 13;
@@ -110,9 +110,9 @@ private:
     // はい・いいえ選択のときのカーソル状態
     int m_confirmCursor = 0;
 
-    std::string m_craftingItem;
+    std::wstring m_craftingItem;
     int m_progress = 0;
-    std::vector<std::string> m_craftQue;
+    std::vector<std::wstring> m_craftQue;
 
     bool m_bEnglish = false;
 };

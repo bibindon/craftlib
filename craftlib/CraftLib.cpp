@@ -1,13 +1,14 @@
 ﻿#include "CraftLib.h"
 #include <sstream>
+#include <tchar.h>
 
 using namespace NSCraftLib;
 
-static std::vector<std::string> split(const std::string& s, char delim)
+static std::vector<std::wstring> split(const std::wstring& s, wchar_t delim)
 {
-    std::vector<std::string> result;
-    std::stringstream ss(s);
-    std::string item;
+    std::vector<std::wstring> result;
+    std::wstringstream ss(s);
+    std::wstring item;
 
     while (getline(ss, item, delim))
     {
@@ -52,18 +53,18 @@ void NSCraftLib::CraftLib::Finalize()
     }
 }
 
-void NSCraftLib::CraftLib::SetOutputList(const std::vector<std::string>& arg)
+void NSCraftLib::CraftLib::SetOutputList(const std::vector<std::wstring>& arg)
 {
     m_outputList = arg;
 }
 
-void NSCraftLib::CraftLib::SetOutputInfo(const std::string& key, const std::string& value)
+void NSCraftLib::CraftLib::SetOutputInfo(const std::wstring& key, const std::wstring& value)
 {
     m_outputInfoMap[key] = value;
 }
 
-void NSCraftLib::CraftLib::SetOutputImage(const std::string& key,
-                                          const std::string& imagePath,
+void NSCraftLib::CraftLib::SetOutputImage(const std::wstring& key,
+                                          const std::wstring& imagePath,
                                           ISprite* sprite)
 {
     if (m_imageMap.find(key) == m_imageMap.end())
@@ -73,18 +74,18 @@ void NSCraftLib::CraftLib::SetOutputImage(const std::string& key,
     }
 }
 
-void NSCraftLib::CraftLib::SetCraftingItem(const std::string& name, const int progress)
+void NSCraftLib::CraftLib::SetCraftingItem(const std::wstring& name, const int progress)
 {
     m_craftingItem = name;
     m_progress = progress;
 }
 
-void NSCraftLib::CraftLib::SetCraftQue(const std::vector<std::string>& craftQue)
+void NSCraftLib::CraftLib::SetCraftQue(const std::vector<std::wstring>& craftQue)
 {
     m_craftQue = craftQue;
 }
 
-std::string CraftLib::Up()
+std::wstring CraftLib::Up()
 {
     if (m_eFocus == eFocus::OUTPUT)
     {
@@ -108,7 +109,7 @@ std::string CraftLib::Up()
     return m_outputList.at(m_leftSelect);
 }
 
-std::string CraftLib::Down()
+std::wstring CraftLib::Down()
 {
     if (m_eFocus == eFocus::OUTPUT)
     {
@@ -132,7 +133,7 @@ std::string CraftLib::Down()
     return m_outputList.at(m_leftSelect);
 }
 
-std::string CraftLib::Right()
+std::wstring CraftLib::Right()
 {
     if (m_eFocus == eFocus::CONFIRM)
     {
@@ -142,10 +143,10 @@ std::string CraftLib::Right()
             m_SE->PlayMove();
         }
     }
-    return std::string();
+    return std::wstring();
 }
 
-std::string CraftLib::Left()
+std::wstring CraftLib::Left()
 {
     if (m_eFocus == eFocus::CONFIRM)
     {
@@ -155,12 +156,12 @@ std::string CraftLib::Left()
             m_SE->PlayMove();
         }
     }
-    return std::string();
+    return std::wstring();
 }
 
-std::string CraftLib::Into()
+std::wstring CraftLib::Into()
 {
-    std::string result;
+    std::wstring result;
     if (m_eFocus == eFocus::OUTPUT)
     {
         m_eFocus = eFocus::CONFIRM;
@@ -182,12 +183,12 @@ std::string CraftLib::Into()
     return result;
 }
 
-std::string CraftLib::Back()
+std::wstring CraftLib::Back()
 {
-    std::string result;
+    std::wstring result;
     if (m_eFocus == eFocus::OUTPUT)
     {
-        result = "EXIT";
+        result = _T("EXIT");
         m_SE->PlayBack();
     }
     else if (m_eFocus == eFocus::CONFIRM)
@@ -198,7 +199,7 @@ std::string CraftLib::Back()
     return result;
 }
 
-std::string NSCraftLib::CraftLib::Next()
+std::wstring NSCraftLib::CraftLib::Next()
 {
     if (m_eFocus == eFocus::OUTPUT)
     {
@@ -222,7 +223,7 @@ std::string NSCraftLib::CraftLib::Next()
     return m_outputList.at(m_leftSelect);
 }
 
-std::string NSCraftLib::CraftLib::Previous()
+std::wstring NSCraftLib::CraftLib::Previous()
 {
     if (m_eFocus == eFocus::OUTPUT)
     {
@@ -470,9 +471,9 @@ void CraftLib::CursorOn(const int x, const int y)
     }
 }
 
-std::string CraftLib::Click(const int x, const int y)
+std::wstring CraftLib::Click(const int x, const int y)
 {
-    std::string result;
+    std::wstring result;
     m_SE->PlayClick();
     if (m_eFocus == eFocus::OUTPUT)
     {
@@ -656,7 +657,7 @@ void CraftLib::Draw()
     }
 
     // 中央の画像
-    std::string work;
+    std::wstring work;
     work = m_outputList.at(m_leftSelect);
 
     if (m_imageMap.find(work) != m_imageMap.end())
@@ -665,8 +666,8 @@ void CraftLib::Draw()
     }
 
     // 右側の説明テキスト
-    std::string detail = m_outputInfoMap.at(work);
-    std::vector<std::string> details = split(detail, '\n');
+    std::wstring detail = m_outputInfoMap.at(work);
+    std::vector<std::wstring> details = split(detail, '\n');
 
     for (std::size_t i = 0; i < details.size(); ++i)
     {
@@ -683,13 +684,13 @@ void CraftLib::Draw()
         m_sprPanelLeft->DrawImage(550, 200 + (m_leftCursor * LEFT_PANEL_HEIGHT));
         if (!m_bEnglish)
         {
-            m_font->DrawText_("クラフトする　　しない",
+            m_font->DrawText_(_T("クラフトする　　しない"),
                               650,
                               200 + LEFT_PANEL_PADDINGY + (m_leftCursor * LEFT_PANEL_HEIGHT) );
         }
         else
         {
-            m_font->DrawText_("Craft           Cancel",
+            m_font->DrawText_(_T("Craft           Cancel"),
                               650,
                               200 + LEFT_PANEL_PADDINGY + (m_leftCursor * LEFT_PANEL_HEIGHT) );
         }
@@ -702,11 +703,11 @@ void CraftLib::Draw()
 
         if (!m_bEnglish)
         {
-            m_font->DrawText_("クラフト中のアイテム", 100, 85);
+            m_font->DrawText_(_T("クラフト中のアイテム"), 100, 85);
         }
         else
         {
-            m_font->DrawText_("Crafting item", 100, 85);
+            m_font->DrawText_(_T("Crafting item"), 100, 85);
         }
 
         // 8文字まで表示（全角8文字）
@@ -717,29 +718,29 @@ void CraftLib::Draw()
         // 表示しきれないときは7文字目まで表示＋「…」
         else
         {
-            m_font->DrawText_(m_craftingItem.substr(0, 14) + "…", 400, 85);
+            m_font->DrawText_(m_craftingItem.substr(0, 14) + _T("…"), 400, 85);
         }
 
         if (m_progress == -1)
         {
             if (!m_bEnglish)
             {
-                m_font->DrawText_("進捗度： 0 ％", 700, 85);
+                m_font->DrawText_(_T("進捗度： 0 ％"), 700, 85);
             }
             else
             {
-                m_font->DrawText_("Progress : 0 %", 700, 85);
+                m_font->DrawText_(_T("Progress : 0 %"), 700, 85);
             }
         }
         else
         {
             if (!m_bEnglish)
             {
-                m_font->DrawText_("進捗度： " + std::to_string(m_progress) + " ％", 700, 85);
+                m_font->DrawText_(_T("進捗度： ") + std::to_wstring(m_progress) + _T(" ％"), 700, 85);
             }
             else
             {
-                m_font->DrawText_("Progress : " + std::to_string(m_progress) + " %", 700, 85);
+                m_font->DrawText_(_T("Progress : ") + std::to_wstring(m_progress) + _T(" %"), 700, 85);
             }
         }
     }
@@ -750,11 +751,11 @@ void CraftLib::Draw()
 
         if (!m_bEnglish)
         {
-            m_font->DrawText_("予約リスト", 155, 145);
+            m_font->DrawText_(_T("予約リスト"), 155, 145);
         }
         else
         {
-            m_font->DrawText_("Request list", 155, 145);
+            m_font->DrawText_(_T("Request list"), 155, 145);
         }
 
         m_sprPanelTop->DrawImage(370, 133);
@@ -768,7 +769,7 @@ void CraftLib::Draw()
             {
                 break;
             }
-            std::string work = m_craftQue.at(i);
+            std::wstring work = m_craftQue.at(i);
 
             // 8文字まで表示（全角8文字）
             if (work.size() <= 8*2)
@@ -778,7 +779,7 @@ void CraftLib::Draw()
             // 表示しきれないときは7文字目まで表示＋「…」
             else
             {
-                m_font->DrawText_(work.substr(0, 14) + "…", 400 + (280 * (int)i), 145);
+                m_font->DrawText_(work.substr(0, 14) + _T("…"), 400 + (280 * (int)i), 145);
             }
         }
     }
