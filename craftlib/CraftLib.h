@@ -73,12 +73,12 @@ private:
         CONFIRM,
     };
 
-    ISprite* m_sprCursor;
-    ISprite* m_sprBackground;
-    ISprite* m_sprPanelLeft;
-    ISprite* m_sprPanelTop;
-    IFont* m_font;
-    ISoundEffect* m_SE;
+    ISprite* m_sprCursor = NULL;
+    ISprite* m_sprBackground = NULL;
+    ISprite* m_sprPanelLeft = NULL;
+    ISprite* m_sprPanelTop = NULL;
+    IFont* m_font = NULL;
+    ISoundEffect* m_SE = NULL;
     eFocus m_eFocus = eFocus::OUTPUT;
 
     std::vector<std::wstring> m_outputList;
