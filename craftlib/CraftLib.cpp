@@ -545,70 +545,70 @@ std::wstring CraftLib::Click(const int x, const int y)
     {
         if (LEFT_PANEL_STARTY < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 1)
         {
-            if (m_leftSelect == 0)
+            if (m_leftCursor == 0)
             {
                 result = Into();
             }
         }
         else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 1 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 2)
         {
-            if (m_leftSelect == 1)
+            if (m_leftCursor == 1)
             {
                 result = Into();
             }
         }
         else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 2 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 3)
         {
-            if (m_leftSelect == 2)
+            if (m_leftCursor == 2)
             {
                 result = Into();
             }
         }
         else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 3 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 4)
         {
-            if (m_leftSelect == 3)
+            if (m_leftCursor == 3)
             {
                 result = Into();
             }
         }
         else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 4 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 5)
         {
-            if (m_leftSelect == 4)
+            if (m_leftCursor == 4)
             {
                 result = Into();
             }
         }
         else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 5 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 6)
         {
-            if (m_leftSelect == 5)
+            if (m_leftCursor == 5)
             {
                 result = Into();
             }
         }
         else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 6 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 7)
         {
-            if (m_leftSelect == 6)
+            if (m_leftCursor == 6)
             {
                 result = Into();
             }
         }
         else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 7 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 8)
         {
-            if (m_leftSelect == 7)
+            if (m_leftCursor == 7)
             {
                 result = Into();
             }
         }
         else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 8 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 9)
         {
-            if (m_leftSelect == 8)
+            if (m_leftCursor == 8)
             {
                 result = Into();
             }
         }
         else if (LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 9 < y && y <= LEFT_PANEL_STARTY + LEFT_PANEL_HEIGHT * 10)
         {
-            if (m_leftSelect == 9)
+            if (m_leftCursor == 9)
             {
                 result = Into();
             }
