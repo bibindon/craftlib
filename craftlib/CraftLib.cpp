@@ -53,9 +53,11 @@ void NSCraftLib::CraftLib::Finalize()
     }
 }
 
-void NSCraftLib::CraftLib::SetOutputList(const std::vector<std::wstring>& arg)
+void NSCraftLib::CraftLib::SetOutputList(const std::vector<std::wstring>& idList,
+                                         const std::vector<std::wstring>& nameList)
 {
-    m_outputList = arg;
+    m_outputIdList = idList;
+    m_outputNameList = nameList;
 }
 
 void NSCraftLib::CraftLib::SetOutputInfo(const std::wstring& key, const std::wstring& value)
@@ -85,7 +87,7 @@ void NSCraftLib::CraftLib::SetCraftQue(const std::vector<std::wstring>& craftQue
     m_craftQue = craftQue;
 }
 
-std::wstring CraftLib::Up()
+void CraftLib::Up()
 {
     if (m_eFocus == eFocus::OUTPUT)
     {
@@ -106,14 +108,13 @@ std::wstring CraftLib::Up()
             }
         }
     }
-    return m_outputList.at(m_leftSelect);
 }
 
-std::wstring CraftLib::Down()
+void CraftLib::Down()
 {
     if (m_eFocus == eFocus::OUTPUT)
     {
-        if (m_leftSelect <= (int)m_outputList.size() - 2)
+        if (m_leftSelect <= (int)m_outputIdList.size() - 2)
         {
             m_leftSelect++;
             m_SE->PlayMove();
@@ -130,10 +131,9 @@ std::wstring CraftLib::Down()
             }
         }
     }
-    return m_outputList.at(m_leftSelect);
 }
 
-std::wstring CraftLib::Right()
+void CraftLib::Right()
 {
     if (m_eFocus == eFocus::CONFIRM)
     {
@@ -143,10 +143,9 @@ std::wstring CraftLib::Right()
             m_SE->PlayMove();
         }
     }
-    return std::wstring();
 }
 
-std::wstring CraftLib::Left()
+void CraftLib::Left()
 {
     if (m_eFocus == eFocus::CONFIRM)
     {
@@ -156,7 +155,6 @@ std::wstring CraftLib::Left()
             m_SE->PlayMove();
         }
     }
-    return std::wstring();
 }
 
 std::wstring CraftLib::Into()
@@ -172,7 +170,7 @@ std::wstring CraftLib::Into()
         if (m_confirmCursor == 0)
         {
             m_SE->PlayClick();
-            result = m_outputList.at(m_leftSelect);
+            result = m_outputIdList.at(m_leftSelect);
         }
         else if (m_confirmCursor == 1)
         {
@@ -199,11 +197,11 @@ std::wstring CraftLib::Back()
     return result;
 }
 
-std::wstring NSCraftLib::CraftLib::Next()
+void NSCraftLib::CraftLib::Next()
 {
     if (m_eFocus == eFocus::OUTPUT)
     {
-        if (m_leftSelect <= (int)m_outputList.size() - 2)
+        if (m_leftSelect <= (int)m_outputIdList.size() - 2)
         {
             m_leftSelect++;
             m_SE->PlayMove();
@@ -220,10 +218,9 @@ std::wstring NSCraftLib::CraftLib::Next()
             }
         }
     }
-    return m_outputList.at(m_leftSelect);
 }
 
-std::wstring NSCraftLib::CraftLib::Previous()
+void NSCraftLib::CraftLib::Previous()
 {
     if (m_eFocus == eFocus::OUTPUT)
     {
@@ -244,7 +241,6 @@ std::wstring NSCraftLib::CraftLib::Previous()
             }
         }
     }
-    return m_outputList.at(m_leftSelect);
 }
 
 void CraftLib::CursorOn(const int x, const int y)
@@ -623,7 +619,7 @@ void CraftLib::Draw()
     m_sprBackground->DrawImage(0, 0);
 
     // 左の列の背景
-    if ((int)m_outputList.size() >= LEFT_PANEL_ROW_MAX)
+    if ((int)m_outputNameList.size() >= LEFT_PANEL_ROW_MAX)
     {
         for (int i = 0; i < LEFT_PANEL_ROW_MAX; ++i) {
             m_sprPanelLeft->DrawImage(LEFT_PANEL_STARTX, LEFT_PANEL_STARTY + (LEFT_PANEL_HEIGHT * (int)i));
@@ -631,26 +627,26 @@ void CraftLib::Draw()
     }
     else
     {
-        for (std::size_t i = 0; i < m_outputList.size(); ++i) {
+        for (std::size_t i = 0; i < m_outputNameList.size(); ++i) {
             m_sprPanelLeft->DrawImage(LEFT_PANEL_STARTX, LEFT_PANEL_STARTY + (LEFT_PANEL_HEIGHT * (int)i));
         }
     }
 
     // 左の列の文字、成果物の名称
-    if ((int)m_outputList.size() >= LEFT_PANEL_ROW_MAX)
+    if ((int)m_outputNameList.size() >= LEFT_PANEL_ROW_MAX)
     {
         for (int i = m_leftBegin; i < m_leftBegin + LEFT_PANEL_ROW_MAX; ++i)
         {
-            m_font->DrawText_(m_outputList.at(i),
+            m_font->DrawText_(m_outputNameList.at(i),
                               LEFT_PANEL_STARTX + LEFT_PANEL_PADDINGX,
                               LEFT_PANEL_STARTY + LEFT_PANEL_PADDINGY + (((int)i - m_leftBegin) * LEFT_PANEL_HEIGHT));
         }
     }
     else
     {
-        for (std::size_t i = 0; i < m_outputList.size(); ++i)
+        for (std::size_t i = 0; i < m_outputNameList.size(); ++i)
         {
-            m_font->DrawText_(m_outputList.at(i),
+            m_font->DrawText_(m_outputNameList.at(i),
                               LEFT_PANEL_STARTX + LEFT_PANEL_PADDINGX,
                               LEFT_PANEL_STARTY + LEFT_PANEL_PADDINGY + ((int)i * LEFT_PANEL_HEIGHT));
         }
@@ -658,7 +654,7 @@ void CraftLib::Draw()
 
     // 中央の画像
     std::wstring work;
-    work = m_outputList.at(m_leftSelect);
+    work = m_outputIdList.at(m_leftSelect);
 
     if (m_imageMap.find(work) != m_imageMap.end())
     {

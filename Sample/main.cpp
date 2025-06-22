@@ -305,34 +305,53 @@ HRESULT InitD3D(HWND hWnd)
 
     if (!bEnglish)
     {
-        std::vector<std::wstring> vs;
+        std::vector<std::wstring> vsId;
 
-        vs.push_back(_T("アイテムＡＡＡ"));
-        vs.push_back(_T("武器ＢＢＢ"));
-        vs.push_back(_T("アイテムＣ"));
-        vs.push_back(_T("アイテムＤ"));
-        vs.push_back(_T("アイテムＥ"));
-        vs.push_back(_T("アイテムＦ"));
-        vs.push_back(_T("アイテムＧ"));
-        vs.push_back(_T("アイテムＨ"));
-        vs.push_back(_T("アイテムＩ"));
-        vs.push_back(_T("アイテムＪ"));
-        vs.push_back(_T("アイテムＫ"));
-        vs.push_back(_T("アイテムＬ"));
-        vs.push_back(_T("アイテムＭ"));
-        vs.push_back(_T("アイテムＮ"));
-        vs.push_back(_T("アイテムＯ"));
-        vs.push_back(_T("アイテムＰ"));
-        menu.SetOutputList(vs);
+        vsId.push_back(_T("item1"));
+        vsId.push_back(_T("item2"));
+        vsId.push_back(_T("item3"));
+        vsId.push_back(_T("item4"));
+        vsId.push_back(_T("item5"));
+        vsId.push_back(_T("item6"));
+        vsId.push_back(_T("item7"));
+        vsId.push_back(_T("item8"));
+        vsId.push_back(_T("item9"));
+        vsId.push_back(_T("item10"));
+        vsId.push_back(_T("item11"));
+        vsId.push_back(_T("item12"));
+        vsId.push_back(_T("item13"));
+        vsId.push_back(_T("item14"));
+        vsId.push_back(_T("item15"));
+        vsId.push_back(_T("item16"));
+        
+        std::vector<std::wstring> vsName;
+
+        vsName.push_back(_T("アイテムＡＡＡ"));
+        vsName.push_back(_T("武器ＢＢＢ"));
+        vsName.push_back(_T("アイテムＣ"));
+        vsName.push_back(_T("アイテムＤ"));
+        vsName.push_back(_T("アイテムＥ"));
+        vsName.push_back(_T("アイテムＦ"));
+        vsName.push_back(_T("アイテムＧ"));
+        vsName.push_back(_T("アイテムＨ"));
+        vsName.push_back(_T("アイテムＩ"));
+        vsName.push_back(_T("アイテムＪ"));
+        vsName.push_back(_T("アイテムＫ"));
+        vsName.push_back(_T("アイテムＬ"));
+        vsName.push_back(_T("アイテムＭ"));
+        vsName.push_back(_T("アイテムＮ"));
+        vsName.push_back(_T("アイテムＯ"));
+        vsName.push_back(_T("アイテムＰ"));
+        menu.SetOutputList(vsId, vsName);
 
         menu.SetCraftingItem(_T("アイテムＺＺＺＺＺ"), 24);
 
-        vs.clear();
-        vs.push_back(_T("アイテム１"));
-        vs.push_back(_T("アイテム２"));
-        vs.push_back(_T("アイテム３"));
-        vs.push_back(_T("アイテム４"));
-        menu.SetCraftQue(vs);
+        vsId.clear();
+        vsId.push_back(_T("アイテム１"));
+        vsId.push_back(_T("アイテム２"));
+        vsId.push_back(_T("アイテム３"));
+        vsId.push_back(_T("アイテム４"));
+        menu.SetCraftQue(vsId);
 
         std::wstring work;
 
@@ -627,34 +646,54 @@ HRESULT InitD3D(HWND hWnd)
     }
     else
     {
-        std::vector<std::wstring> vs;
+        std::vector<std::wstring> vsId;
 
-        vs.push_back(_T("item_AAA"));
-        vs.push_back(_T("item_BBB"));
-        vs.push_back(_T("item_CCC"));
-        vs.push_back(_T("item_DDD"));
-        vs.push_back(_T("item_EEE"));
-        vs.push_back(_T("item_FFF"));
-        vs.push_back(_T("item_GGG"));
-        vs.push_back(_T("item_HHH"));
-        vs.push_back(_T("item_III"));
-        vs.push_back(_T("item_JJJ"));
-        vs.push_back(_T("item_KKK"));
-        vs.push_back(_T("item_LLL"));
-        vs.push_back(_T("item_MMM"));
-        vs.push_back(_T("item_NNN"));
-        vs.push_back(_T("item_OOO"));
-        vs.push_back(_T("item_PPP"));
-        menu.SetOutputList(vs);
+        vsId.push_back(_T("item_AAA"));
+        vsId.push_back(_T("item_BBB"));
+        vsId.push_back(_T("item_CCC"));
+        vsId.push_back(_T("item_DDD"));
+        vsId.push_back(_T("item_EEE"));
+        vsId.push_back(_T("item_FFF"));
+        vsId.push_back(_T("item_GGG"));
+        vsId.push_back(_T("item_HHH"));
+        vsId.push_back(_T("item_III"));
+        vsId.push_back(_T("item_JJJ"));
+        vsId.push_back(_T("item_KKK"));
+        vsId.push_back(_T("item_LLL"));
+        vsId.push_back(_T("item_MMM"));
+        vsId.push_back(_T("item_NNN"));
+        vsId.push_back(_T("item_OOO"));
+        vsId.push_back(_T("item_PPP"));
+
+        std::vector<std::wstring> vsName;
+
+        vsName.push_back(_T("AAA"));
+        vsName.push_back(_T("BBB"));
+        vsName.push_back(_T("CCC"));
+        vsName.push_back(_T("DDD"));
+        vsName.push_back(_T("EEE"));
+        vsName.push_back(_T("FFF"));
+        vsName.push_back(_T("GGG"));
+        vsName.push_back(_T("HHH"));
+        vsName.push_back(_T("III"));
+        vsName.push_back(_T("JJJ"));
+        vsName.push_back(_T("KKK"));
+        vsName.push_back(_T("LLL"));
+        vsName.push_back(_T("MMM"));
+        vsName.push_back(_T("NNN"));
+        vsName.push_back(_T("OOO"));
+        vsName.push_back(_T("PPP"));
+
+        menu.SetOutputList(vsId, vsName);
 
         menu.SetCraftingItem(_T("item_zzzzz"), 24);
 
-        vs.clear();
-        vs.push_back(_T("item_1"));
-        vs.push_back(_T("item_2"));
-        vs.push_back(_T("item_3"));
-        vs.push_back(_T("item_4"));
-        menu.SetCraftQue(vs);
+        vsId.clear();
+        vsId.push_back(_T("item_1"));
+        vsId.push_back(_T("item_2"));
+        vsId.push_back(_T("item_3"));
+        vsId.push_back(_T("item_4"));
+        menu.SetCraftQue(vsId);
 
         std::wstring work;
 

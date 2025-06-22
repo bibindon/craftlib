@@ -45,7 +45,9 @@ public:
 
     void Finalize();
 
-    void SetOutputList(const std::vector<std::wstring>& arg);
+    void SetOutputList(const std::vector<std::wstring>& idList,
+                       const std::vector<std::wstring>& nameList);
+
     void SetOutputInfo(const std::wstring& key, const std::wstring& value);
     void SetOutputImage(const std::wstring& key,
                         const std::wstring& imagePath,
@@ -53,14 +55,14 @@ public:
     void SetCraftingItem(const std::wstring& name, const int progress);
     void SetCraftQue(const std::vector<std::wstring>& craftQue);
 
-    std::wstring Up();
-    std::wstring Down();
-    std::wstring Right();
-    std::wstring Left();
+    void Up();
+    void Down();
+    void Right();
+    void Left();
     std::wstring Into();
     std::wstring Back();
-    std::wstring Next();
-    std::wstring Previous();
+    void Next();
+    void Previous();
     void CursorOn(const int x, const int y);
     std::wstring Click(const int x, const int y);
     void Draw();
@@ -81,7 +83,12 @@ private:
     ISoundEffect* m_SE = NULL;
     eFocus m_eFocus = eFocus::OUTPUT;
 
-    std::vector<std::wstring> m_outputList;
+    // IDのリスト
+    std::vector<std::wstring> m_outputIdList;
+
+    // 名称のリスト
+    std::vector<std::wstring> m_outputNameList;
+
     std::unordered_map<std::wstring, std::wstring> m_outputInfoMap;
     std::unordered_map<std::wstring, ISprite*> m_imageMap;
 
