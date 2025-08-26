@@ -127,7 +127,7 @@ public:
                                         OUT_TT_ONLY_PRECIS,
                                         CLEARTYPE_NATURAL_QUALITY,
                                         FF_DONTCARE,
-                                        _T("Courier New"),
+                                        L"Calibri",
                                         &m_pFont);
         }
     }
@@ -300,7 +300,7 @@ HRESULT InitD3D(HWND hWnd)
 
     ISoundEffect* pSE = new SoundEffect();
 
-    bool bEnglish = true;
+    bool bEnglish = false;
     menu.Init(pFont, pSE, sprCursor, sprBackground, sprPanelLeft, sprPanelTop, bEnglish);
 
     if (!bEnglish)
@@ -347,10 +347,10 @@ HRESULT InitD3D(HWND hWnd)
         menu.SetCraftingItem(_T("アイテムＺＺＺＺＺ"), 24);
 
         vsId.clear();
-        vsId.push_back(_T("アイテム１"));
-        vsId.push_back(_T("アイテム２"));
-        vsId.push_back(_T("アイテム３"));
-        vsId.push_back(_T("アイテム４"));
+        vsId.push_back(_T("アイテム１１１１１１１１１１１"));
+        vsId.push_back(_T("アイテム２２２２２２２２２２２"));
+        vsId.push_back(_T("アイテム３３３３３３３３３３３"));
+        vsId.push_back(_T("アイテム４４４４４４４４４４４"));
         menu.SetCraftQue(vsId);
 
         std::wstring work;
@@ -368,10 +368,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２０\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("アイテムＡＡＡ"), work);
+            menu.SetOutputInfo(_T("item1"), work);
 
             ISprite* sprite1 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("アイテムＡＡＡ"), _T("item1.png"), sprite1);
+            menu.SetOutputImage(_T("item1"), _T("item1.png"), sprite1);
         }
         {
             work = _T("成果物の名前：武器ＢＢＢ\n");
@@ -386,10 +386,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２２２\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("武器ＢＢＢ"), work);
+            menu.SetOutputInfo(_T("item2"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("武器ＢＢＢ"), _T("item2.png"), sprite2);
+            menu.SetOutputImage(_T("item2"), _T("item2.png"), sprite2);
         }
         {
             work = _T("成果物の名前：アイテムＣ\n");
@@ -404,10 +404,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２２２\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("アイテムＣ"), work);
+            menu.SetOutputInfo(_T("item3"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("アイテムＣ"), _T("item3.png"), sprite2);
+            menu.SetOutputImage(_T("item3"), _T("item3.png"), sprite2);
         }
         {
             work = _T("成果物の名前：アイテムＤ\n");
@@ -422,10 +422,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２２２\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("アイテムＤ"), work);
+            menu.SetOutputInfo(_T("item4"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("アイテムＤ"), _T("item1.png"), sprite2);
+            menu.SetOutputImage(_T("item4"), _T("item1.png"), sprite2);
         }
         {
             work = _T("成果物の名前：アイテムＥ\n");
@@ -440,10 +440,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２２２\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("アイテムＥ"), work);
+            menu.SetOutputInfo(_T("item5"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("アイテムＥ"), _T("item1.png"), sprite2);
+            menu.SetOutputImage(_T("item5"), _T("item1.png"), sprite2);
         }
         {
             work = _T("成果物の名前：アイテムＦ\n");
@@ -458,10 +458,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２２２\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("アイテムＦ"), work);
+            menu.SetOutputInfo(_T("item6"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("アイテムＦ"), _T("item1.png"), sprite2);
+            menu.SetOutputImage(_T("item6"), _T("item1.png"), sprite2);
         }
         {
             work = _T("成果物の名前：アイテムＧ\n");
@@ -476,10 +476,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２２２\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("アイテムＧ"), work);
+            menu.SetOutputInfo(_T("item7"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("アイテムＧ"), _T("item1.png"), sprite2);
+            menu.SetOutputImage(_T("item7"), _T("item1.png"), sprite2);
         }
         {
             work = _T("成果物の名前：アイテムＨ\n");
@@ -494,10 +494,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２２２\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("アイテムＨ"), work);
+            menu.SetOutputInfo(_T("item8"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("アイテムＨ"), _T("item1.png"), sprite2);
+            menu.SetOutputImage(_T("item8"), _T("item1.png"), sprite2);
         }
         {
             work = _T("成果物の名前：アイテムＩ\n");
@@ -512,10 +512,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２２２\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("アイテムＩ"), work);
+            menu.SetOutputInfo(_T("item9"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("アイテムＩ"), _T("item1.png"), sprite2);
+            menu.SetOutputImage(_T("item9"), _T("item1.png"), sprite2);
         }
         {
             work = _T("成果物の名前：アイテムＪ\n");
@@ -530,10 +530,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２２２\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("アイテムＪ"), work);
+            menu.SetOutputInfo(_T("item10"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("アイテムＪ"), _T("item1.png"), sprite2);
+            menu.SetOutputImage(_T("item10"), _T("item1.png"), sprite2);
         }
         {
             work = _T("成果物の名前：アイテムＫ\n");
@@ -548,10 +548,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２２２\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("アイテムＫ"), work);
+            menu.SetOutputInfo(_T("item11"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("アイテムＫ"), _T("item1.png"), sprite2);
+            menu.SetOutputImage(_T("item11"), _T("item1.png"), sprite2);
         }
         {
             work = _T("成果物の名前：アイテムＬ\n");
@@ -566,10 +566,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２２２\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("アイテムＬ"), work);
+            menu.SetOutputInfo(_T("item12"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("アイテムＬ"), _T("item1.png"), sprite2);
+            menu.SetOutputImage(_T("item12"), _T("item1.png"), sprite2);
         }
         {
             work = _T("成果物の名前：アイテムＭ\n");
@@ -584,10 +584,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２２２\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("アイテムＭ"), work);
+            menu.SetOutputInfo(_T("item13"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("アイテムＭ"), _T("item1.png"), sprite2);
+            menu.SetOutputImage(_T("item13"), _T("item1.png"), sprite2);
         }
         {
             work = _T("成果物の名前：アイテムＮ\n");
@@ -602,10 +602,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２２２\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("アイテムＮ"), work);
+            menu.SetOutputInfo(_T("item14"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("アイテムＮ"), _T("item1.png"), sprite2);
+            menu.SetOutputImage(_T("item14"), _T("item1.png"), sprite2);
         }
         {
             work = _T("成果物の名前：アイテムＯ\n");
@@ -620,10 +620,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２２２\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("アイテムＯ"), work);
+            menu.SetOutputInfo(_T("item15"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("アイテムＯ"), _T("item1.png"), sprite2);
+            menu.SetOutputImage(_T("item15"), _T("item1.png"), sprite2);
         }
         {
             work = _T("成果物の名前：アイテムＰ\n");
@@ -638,10 +638,10 @@ HRESULT InitD3D(HWND hWnd)
             work += _T("素材２の数：２２２\n");
             work += _T("素材２の強化度：２\n");
 
-            menu.SetOutputInfo(_T("アイテムＰ"), work);
+            menu.SetOutputInfo(_T("item16"), work);
 
             ISprite* sprite2 = new Sprite(g_pd3dDevice);
-            menu.SetOutputImage(_T("アイテムＰ"), _T("item1.png"), sprite2);
+            menu.SetOutputImage(_T("item16"), _T("item1.png"), sprite2);
         }
     }
     else
@@ -686,13 +686,13 @@ HRESULT InitD3D(HWND hWnd)
 
         menu.SetOutputList(vsId, vsName);
 
-        menu.SetCraftingItem(_T("item_zzzzz"), 24);
+        menu.SetCraftingItem(_T("item_zzzzzzzzzzzzzzzz"), 24);
 
         vsId.clear();
-        vsId.push_back(_T("item_1"));
-        vsId.push_back(_T("item_2"));
-        vsId.push_back(_T("item_3"));
-        vsId.push_back(_T("item_4"));
+        vsId.push_back(_T("item_11111111111111"));
+        vsId.push_back(_T("item_22222222222222"));
+        vsId.push_back(_T("item_33333333333333"));
+        vsId.push_back(_T("item_44444444444444"));
         menu.SetCraftQue(vsId);
 
         std::wstring work;

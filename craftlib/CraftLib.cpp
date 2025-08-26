@@ -71,8 +71,8 @@ void NSCraftLib::CraftLib::SetOutputImage(const std::wstring& key,
 {
     if (m_imageMap.find(key) == m_imageMap.end())
     {
-		sprite->Load(imagePath);
-		m_imageMap[key] = sprite;
+        sprite->Load(imagePath);
+        m_imageMap[key] = sprite;
     }
 }
 
@@ -706,15 +706,31 @@ void CraftLib::Draw()
             m_font->DrawText_(_T("Crafting item"), 100, 85);
         }
 
-        // 8文字まで表示（全角8文字）
-        if (m_craftingItem.size() <= 8*2)
+        // 8文字まで表示（英語だったら16文字）
+
+        if (m_bEnglish)
         {
-            m_font->DrawText_(m_craftingItem, 400, 85);
+            if (m_craftingItem.size() <= 16)
+            {
+                m_font->DrawText_(m_craftingItem, 400, 85);
+            }
+            // 表示しきれないときは7文字目まで表示＋「…」
+            else
+            {
+                m_font->DrawText_(m_craftingItem.substr(0, 13) + _T("..."), 400, 85);
+            }
         }
-        // 表示しきれないときは7文字目まで表示＋「…」
         else
         {
-            m_font->DrawText_(m_craftingItem.substr(0, 14) + _T("…"), 400, 85);
+            if (m_craftingItem.size() <= 8)
+            {
+                m_font->DrawText_(m_craftingItem, 400, 85);
+            }
+            // 表示しきれないときは7文字目まで表示＋「…」
+            else
+            {
+                m_font->DrawText_(m_craftingItem.substr(0, 7) + _T("…"), 400, 85);
+            }
         }
 
         if (m_progress == -1)
@@ -767,15 +783,31 @@ void CraftLib::Draw()
             }
             std::wstring work = m_craftQue.at(i);
 
-            // 8文字まで表示（全角8文字）
-            if (work.size() <= 8*2)
+            if (m_bEnglish)
             {
-                m_font->DrawText_(work, 400 + (280 * (int)i), 145);
+                // 8文字まで表示（英語だったら16文字）
+                if (work.size() <= 16)
+                {
+                    m_font->DrawText_(work, 400 + (280 * (int)i), 145);
+                }
+                // 表示しきれないときは7文字目まで表示＋「…」
+                else
+                {
+                    m_font->DrawText_(work.substr(0, 13) + _T("..."), 400 + (280 * (int)i), 145);
+                }
             }
-            // 表示しきれないときは7文字目まで表示＋「…」
             else
             {
-                m_font->DrawText_(work.substr(0, 14) + _T("…"), 400 + (280 * (int)i), 145);
+                // 8文字まで表示（英語だったら16文字）
+                if (work.size() <= 8)
+                {
+                    m_font->DrawText_(work, 400 + (280 * (int)i), 145);
+                }
+                // 表示しきれないときは7文字目まで表示＋「…」
+                else
+                {
+                    m_font->DrawText_(work.substr(0, 7) + _T("…"), 400 + (280 * (int)i), 145);
+                }
             }
         }
     }
